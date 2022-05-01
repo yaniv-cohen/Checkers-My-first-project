@@ -20,8 +20,6 @@ class BoardData {
         selected = [row, col];
     }
 
-
-
     getCell(row, col) {
         return (document.getElementById('gameBoard').firstChild.rows[row].cells[col]);
     }
@@ -32,13 +30,11 @@ class BoardData {
 
             document.getElementsByClassName('selected')[0].classList.remove('selected');
         }
-
     }
     deleteOptions() {
         while (document.getElementsByClassName('option').length > 0) {
             document.getElementsByClassName('option')[0].classList.remove('option');
         }
-
     }
 }
 

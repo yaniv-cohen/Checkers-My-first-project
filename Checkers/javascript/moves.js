@@ -24,8 +24,11 @@ function showPossibleMoves(row, col, combo, cellValue) {
                 //do nothing
             }
             //0 is empty =>add it
-            else if (multiplyCells === 0 && !combo) {
-                legalMoves.push([row + direction, col - 1])
+            else if (multiplyCells === 0 ) {
+                if( !combo)
+                {
+                legalMoves.push([row + direction, col - 1]);
+                }
             }
             //enemy => don't add, check next left
             else {
@@ -47,8 +50,11 @@ function showPossibleMoves(row, col, combo, cellValue) {
                 //do nothing
             }
             //0 is empty =>add it
-            else if (multiplyCells === 0 && !combo) {
-                legalMoves.push([row + direction, col + 1])
+            else if (multiplyCells === 0 ) {
+                if( !combo)
+                {
+                legalMoves.push([row + direction, col + 1]);
+                }
             }
             //enemy => don't add, check next left
             else {
@@ -78,11 +84,15 @@ function showPossibleMoves(row, col, combo, cellValue) {
                 //do nothing
             }
             //0 is empty =>add it
-            else if (multiplyCells === 0 && !combo) {
-                legalMoves.push([row + direction, col - 1])
+            else if (multiplyCells === 0 ) {
+                if( !combo)
+                {
+                    legalMoves.push([row + direction, col - 1]);
+                }
             }
             //enemy => don't add, check next left
             else {
+                console.log("enemy on the left: " + multiplyCells);
                 //if i won't exit the boundary
                 if (row > 1 && (col > 1)) {
                     multiplyCells = data.board[row + (2 * direction)][col - 2] * cellValue;
@@ -104,14 +114,17 @@ function showPossibleMoves(row, col, combo, cellValue) {
                 //do nothing
             }
             //0 is empty =>add it
-            else if (multiplyCells === 0 && !combo) {
-                legalMoves.push([row + direction, col + 1])
+            else if (multiplyCells === 0 ) {
+                if( !combo)
+                {
+                legalMoves.push([row + direction, col + 1]);
+                }
             }
             //enemy => don't add, check next left
             else {
                 //if i won't exit the boundary
 
-                if (row > 0 && (col < 6)) {
+                if (row > 1 && (col < 6)) {
                     multiplyCells = data.board[row + (2 * direction)][col + 2] * cellValue;
                     if (data.board[row + (2 * direction)][col + 2] === 0) {
                         legalMoves.push([row + (2 * direction), col + 2]);
