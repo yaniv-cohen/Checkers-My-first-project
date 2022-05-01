@@ -1,5 +1,5 @@
 class BoardData {
-    constructor(startingPlayer) {
+    constructor(startingPlayer,queenSetting) {
         //board keeps track of the units: 1 is white normal, 2 is white queen, -1 black normal, -2 black queen
         this.board = [
             [1, 0, 1, 0, , 0, 0, 0],
@@ -16,6 +16,7 @@ class BoardData {
         this.white_unit_count = 0;
         this.black_unit_count = 0;
         this.countPieces();
+        this.queenSetting=queenSetting;
     }
 
     countPieces() {
