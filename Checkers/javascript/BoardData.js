@@ -2,13 +2,13 @@ class BoardData {
     constructor(startingPlayer) {
         //board keeps track of the units: 1 is white normal, 2 is white queen, -1 black normal, -2 black queen
         this.board = [
+            [1, 0, 0, 0, 1, 0, 1, 0],
+            [0, 1, 0,-1, 0, 1, 0, 1],
             [1, 0, 1, 0, 1, 0, 1, 0],
-            [0, 1, 0, 1, 0, 1, 0, 1],
-            [-1, 0, -1, 0, -1, 0, 0, 0],
-            [0, 1, 0, -1, 0, 1, 0, 1],
             [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, -1, 0, -1, 0, -1, 0, -1],
-            [-1, 0, -1, 0, -1, 0, -1, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0],
+            [0, -1, 0, -1, 0, 0, 0, -1],
+            [-1, 0, -1, 0, -1, 0, 1, 0],
             [0, -1, 0, -1, 0, -1, 0, -1]
         ];
         this.currentPlayer = startingPlayer;

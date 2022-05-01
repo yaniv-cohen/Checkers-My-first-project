@@ -70,7 +70,6 @@ function showPossibleMoves(row, col, combo, cellValue) {
     //if black
     else if (direction < 0 && row > 0) {
         //look left
-        console.log('move black');
         if (col > 0) {
             let multiplyCells = data.board[row + direction][col - 1]
                 * cellValue;
@@ -120,11 +119,11 @@ function showPossibleMoves(row, col, combo, cellValue) {
                 }
             }
         }
-        if ((direction > 1 && row < 7) || (direction < 0 && row > 0)) {
+        // if ((direction > 1 && row < 7) || (direction < 0 && row > 0)) {
 
-        }
+        // }
     }
-    console.log("legalMoves:" + legalMoves);
+
     addAvailableOption(legalMoves);
 
 
@@ -139,29 +138,9 @@ function showPossibleMoves(row, col, combo, cellValue) {
                 targetElement.classList.add('option');
             }
         }
-    }
 
-    // function getMoves(row, col, direction) {
-    //     let moves = [];
-    //     //black
-    //     if (row > 0 && direction == 1) {
-    //         if (col > 0) {
-    //             moves.push([row + 1, col - 1]);
-    //         }
-    //         if (col < 7) {
-    //             moves.push([row + 1, col + 1]);
-    //             // moves.push([row + 1, col + 1]);
-    //         }
-    //     }
-    //     //white
-    //     else if (row < 7 && direction == -1) {
-    //         if (col > 0) {
-    //             moves.push([row - 1, col - 1]);
-    //         }
-    //         if (col < 7) {
-    //             moves.push([row - 1, col + 1]);
-    //         }
-    //     }
-    //     return moves;
-    // }
+
+    }
+    console.log("return legalMoves: " + legalMoves);
+    return (legalMoves.length > 0);
 }

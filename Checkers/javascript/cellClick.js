@@ -24,10 +24,12 @@ function cellClick(row, col, data) {
             (data.currentPlayer === "black" && data.board[row][col] < 0)) {
             data.deselct();
             data.deleteOptions();
+            //if I am not in a combo move
             if (!data.combo) {
                 data.select(row, col, cell)
                 showPossibleMoves(row, col, false, cellValue);
             }
+            //if clicked on a diffrent unit during a combo - end turn
             else {
                 changePlayer();
             }
@@ -48,33 +50,17 @@ function cellClick(row, col, data) {
                 if (Math.abs(row - selected[0]) > 1) {
 
                     //remove eatten piece
-                    data.board[(row + selected[0]) / 2][(col + selected[1]) / 2] = 0;
-                    document.getElementById('game').rows[(row + selected[0]) / 2].cells[(col + selected[1]) / 2].className = 'dark-cell';
-
-                    // click on the new cell
-                    //update selected to the new cell
-                    data.deselct();
-                    data.deleteOptions();
-                    data.select(row, col, cell)
-                    //I ate do a combo
-                    data.combo=true;
-                    showPossibleMoves(row, col, true, data.board[row][col]);
-                    console.log("showPossibleMoves: ");
+                    onEat();
+                    
                 }
+                //if I didn't eat => end turn
                 else {
                     data.deselct(row, col, cell);
                     data.deleteOptions();
                     data.combo=false;
                     changePlayer();
                 }
-                //if I didn't eat - do a combo
 
-                //if ate or not => clear all clicks
-
-                // data.deleteOptions();
-                // data.deselct();
-
-                // console.log('set player to ' + data.currentPlayer);
             }
 
 
@@ -86,6 +72,27 @@ function cellClick(row, col, data) {
             //  data.getMoves(row,col,direction);
         }
     }
+    function onEat() {
+        data.board[(row + selected[0]) / 2][(col + selected[1]) / 2] = 0;
+        document.getElementById('game').rows[(row + selected[0]) / 2].cells[(col + selected[1]) / 2].className = 'dark-cell';
+
+        // click on the new cell
+        //update selected to the new cell
+        data.deselct();
+        data.deleteOptions();
+        data.select(row, col, cell);
+        //I ate do a combo
+        data.combo = true;
+        let continueCombo =showPossibleMoves(row, col, true, data.board[row][col]);
+        if(!continueCombo)
+        {
+            data.deselct(row, col, cell);
+            data.deleteOptions();
+            data.combo=false;
+            changePlayer();
+        }
+    }
+
     function changePlayer() {
         if (data.currentPlayer == 'white') {
             data.currentPlayer = "black";
