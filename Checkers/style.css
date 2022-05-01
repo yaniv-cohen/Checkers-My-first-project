@@ -1,0 +1,26 @@
+td{
+    height: 50px;
+    width:50px;
+    background-color: red;
+}
+.dark-cell{
+background-color: slategrey;
+}
+
+.light-cell{
+    background-color: beige;
+
+}
+.white-piece{
+    background-image: url('images/circle-white.svg');
+}
+
+.black-piece{
+    background-image: url('images/circle-black.svg');
+}
+.selected{
+    background-color: aquamarine;
+}
+.option{
+    background-color: greenyellow;
+}
