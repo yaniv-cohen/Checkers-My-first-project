@@ -1,6 +1,43 @@
 function cellClick(row, col, data) {
     let cell = document.getElementById('game').rows[row].cells[col];
     let cellValue = data.board[row][col];
+    data.movePool=[];
+    fillMovePool(data.currentPlayer);
+    // function fillMovePool(player) {
+    //     for (let i = 0; i < data.board.length; i++) {
+    //         for (let k = 0; k < data.board.length; k++) {
+    //             if(data.board[i][k] >0)
+    //             {
+    //                showPossibleMoves(i,k,false,data.board[i][k],false);
+    //             }
+    //         }
+    //     }
+    //     console.log(data.movePool);
+    // }
+        function filterMovePool()
+        {
+        let jump = false;
+        for (let i = 0; i < data.movePool.length; i++) {
+            //if there is a possible jump
+            if (data.movePool[i][1]) {
+                jump = true;
+                console.log('can jump');
+            }
+        }
+        if (jump) {
+            let i = 0;
+            while (i < data.movePool.length) {
+                if (data.movePool[i][1]) {
+                    i++;
+                }
+                else {
+                    data.movePool.splice(i, 1);
+                }
+            }
+
+        }
+
+    }
     //if i have no piece selected
     if (selected.length == 0) {
         //if it is my piece
@@ -9,7 +46,29 @@ function cellClick(row, col, data) {
             //select this piece
             data.deleteOptions();
             data.select(row, col, cell);
-            showPossibleMoves(row, col, false, cellValue);
+            showPossibleMoves(row, col, false, data.board[row][col]);
+            // data.movePool.push(showPossibleMoves(row, col, false, cellValue));
+            //add all valid moves
+            for (let i = 0; i < data.board.length; i++) {
+                for (let k = 0; k < data.board[i].length; k++) {
+
+                    //if the cell is black
+                    if (data.currentPlayer == 'black') {
+                        //if the piece is black, add its moevs to the move pool
+                        if (data.board[i][k] > 0) {
+                            //add this unit's moves to the move pool
+                            // data.movePool.push(showPossibleMoves(row, col, false, cellValue));
+                            
+                        }
+                    }
+
+                    //if i have a possible move
+                    if (data.board[i][k] < 0 && showPossibleMoves(i, k, false, data.board[i][k], false)) {
+                        console.log("showPossibleMoves(i, k, false, data.board[i][k], false): " + showPossibleMoves(i, k, false, data.board[i][k], false));
+                        return true;
+                    }
+                }
+            }
         }
         //if clicked on nothing
         //do nothing
@@ -84,7 +143,7 @@ function cellClick(row, col, data) {
                 //if he can't than the 
                 if (!canMakeMove(data.currentPlayer)) {
                     changePlayer();
-                    winner(data.currentPlayer,'no-moves');
+                    winner(data.currentPlayer, 'no-moves');
                 }
 
             }
@@ -147,7 +206,7 @@ function cellClick(row, col, data) {
             for (let i = 0; i < data.board.length; i++) {
                 for (let k = 0; k < data.board[i].length; k++) {
 
-                    //if the cell is black
+                    //if the cell is white
                     //if i have a possible move
                     if (data.board[i][k] > 0 && showPossibleMoves(i, k, false, data.board[i][k], false)) {
                         console.log("showPossibleMoves(i, k, false, data.board[i][k], false): " + showPossibleMoves(i, k, false, data.board[i][k], false));

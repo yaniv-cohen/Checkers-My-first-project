@@ -17,6 +17,9 @@ class BoardData {
         this.black_unit_count = 0;
         this.countPieces();
         this.queenSetting=queenSetting;
+        this.movePool=[];
+        this.newMovePool=[];
+        this.canEat=false;
     }
 
     countPieces() {
@@ -33,7 +36,7 @@ class BoardData {
                 }
             }
         }
-        console.log("this.black_unit_count: " + this.black_unit_count);
+        
         if (this.black_unit_count <= 0) {
             winner('white');
         }
