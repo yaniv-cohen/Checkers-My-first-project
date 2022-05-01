@@ -1,6 +1,5 @@
 //return all possible moves for selected unit
-
-function getPossibleOneMove(row, col) {
+function getAllMoves(row, col,paint =true) {
     let legalMoves = [];
     let direction;
     if (data.currentPlayer == "white") {
@@ -9,44 +8,283 @@ function getPossibleOneMove(row, col) {
     else {
         direction = -1;
     }
+    //white normal piece
+    if (Math.abs(data.board[row][col]) == 1) {
 
-    //if white
-    if (direction > 0) {
-        if (row > 0) {
-            //look left 
-            if (col > 0) {
-                if (data.board[row + direction][col + direction] ===0) {
-                    legalMoves.push([row + direction, col - direction]);
-                }
-            }
+        getLegalJumps(row, col);
+
+        if (legalMoves.length == 0 &&!data.combo) {
+            getLegalOneMove(row, col);
         }
-        //look right
-        if (col < 7) {
-            if (data.board[row + direction][col + direction] ===0) {
-                legalMoves.push([row + direction, col + direction]);
-            }
+        else{
+            data.canEat = true;
         }
-        return legalMoves;
     }
-    //if black
-    else if (direction < 0) {
-        if (row > 0) {
-            //look left 
-            if (col > 0) {
-                if (data.board[row + direction][col -1] ===0) {
-                    legalMoves.push([row + direction, col - 1]);
-                }
+    //white queen
+    else if (Math.abs(data.board[row][col]) == 2) {
+        getLegalQueenJumps(row, col);
+        if (!data.combo) {
+            getLegalQueenFirstMoveJump(row, col);
+            if (legalMoves.length == 0 &&!data.canEat) {
+                getLegalQueenFirstMoves(row, col);
+                //TODO: end player turn
+            }
+            else
+            {
+                data.canEat = true;
             }
         }
-        //look right
-        if (col < 7) {
-            if (data.board[row + direction][col + 1] ===0) {
-                legalMoves.push([row + direction, col + 1]);
-            }
-        }
-        return legalMoves;
+        
     }
+    if(paint)
+    {
+    addAvailableOption();
 }
+    function getLegalQueenFirstMoveJump(row, col) {
+        //if white
+        //eat down right + +
+        for (let i = 0; row + 1 + i < 7 && col + 1 + i < 7; i++) {
+            if (row < 6 && col < 6 && direction * data.board[row + 1 + i][col + 1 + i] < 0) {
+                if (data.board[row + 2 + i][col + 2 + i] === 0) {
+                    legalMoves.push([row + 2 + i, col + 2 + i]);
+                }
+         
+                break;
+            }
+        }
+        //eat down left + -
+        for (let i = 0; row + 1 + i < 7 && col - 1- i >0; i++) {
+            console.log('dl');
+            if (row < 6 && col >1  && direction * data.board[row + 1 + i][col - 1 - i] < 0) {
+                if (data.board[row + 2 + i][col - 2 - i] === 0) {
+                    legalMoves.push([row + 2 + i, col - 2 - i]);
+                }
+
+                break;
+            }
+        }
+        //eat up left - -
+        for (let i = 0; row - 1 - i>0 && col - 1- i >0; i++) {
+            console.log('ul');
+            if (row >1 && col >1  && direction * data.board[row - 1 - i][col - 1 - i] < 0) {
+                if (data.board[row - 2 - i][col - 2 - i] === 0) {
+                    legalMoves.push([row - 2 - i, col - 2 - i]);
+                }
+ 
+                break;
+            }
+        }
+        //eat up right - -
+        for (let i = 0; row - 1 - i>0 && col - 1- i >0; i++) {
+            console.log('ur');
+            if (row >1 && col >1  && direction * data.board[row - 1 - i][col + 1 + i] < 0) {
+                if (data.board[row - 2 - i][col + 2 + i] === 0) {
+                    legalMoves.push([row - 2 - i, col + 2 + i]);
+                }
+ 
+                break;
+            }
+        }
+
+
+
+    }
+    function getLegalQueenFirstMoves() {
+
+        console.log("get legal moves for the queen");
+        //if white
+        //move down right + +
+        for (let i = 0; row + 1 + i <= 7 && col + 1 + i <= 7; i++) {
+            if (row < 6 && col < 6 ) {
+                if (data.board[row + 1 + i][col + 1 + i] === 0) {
+                    legalMoves.push([row + 1 + i, col + 1 + i]);
+                }
+                else{
+
+                    break;
+                } 
+            }
+        }
+        
+        //move down left - -
+        for (let i = 0; row + 1 + i <= 7 && col - 1- i >=0; i++) {
+            console.log('dl');
+            if (row < 6 && col > 1 ) {
+                if (data.board[row + 1 + i][col - 1 - i] === 0) {
+                    legalMoves.push([row + 1 + i, col - 1 - i]);
+                }
+                else{
+
+                    break;
+                }
+
+            }
+
+        }
+
+        //move up left - +
+        for (let i = 0; row - 1 - i >= 0 && col - 1- i >=0; i++) {
+            console.log('ul');
+            if (row >1 && col > 1 ) {
+                if (data.board[row - 1 - i][col - 1 - i] === 0) {
+                    legalMoves.push([row - 1 - i, col - 1 - i]);
+                }
+                else{
+
+                    break;
+                }
+
+            }
+
+        }
+        //move up right + -
+        for (let i = 0; row - 1 - i >= 0 && col + 1+ i <=7; i++) {
+            console.log('ur');
+            if (row <6 && col < 6 ) {
+                if (data.board[row - 1 - i][col + 1 + i] === 0) {
+                    legalMoves.push([row - 1 - i, col + 1 + i]);
+                }
+                else{
+
+                    break;
+                }
+
+            }
+
+        }
+
+
+
+    }
+    function getLegalQueenJumps(row, col) {
+
+        console.log("get legal queen jump ");
+        //if white
+        //eat down left
+        
+        if (row < 6 && col > 1 && direction * data.board[row + 1][col - 1] < 0) {
+            if (data.board[row + 2][col - 2] === 0) {
+                legalMoves.push([row + 2, col - 2]);
+                console.log("[row - 2, col - 2]: " + [row + 2, col - 2]);
+            }
+        }
+        //eat down right
+        if (row < 6 && col < 6 && direction * data.board[row + 1][col + 1] < 0) {
+            console.log('downright');
+            if (data.board[row + 2 * direction][col + 2] === 0) {
+                legalMoves.push([row + 2, col + 2]);
+            }
+        }
+        // look up left
+        if ( row > 1 && col > 1) {
+            if (direction * data.board[row - 1][col - 1] < 0 && data.board[row - 2][col - 2] === 0) {
+                legalMoves.push([row - 2, col - 2]);
+            }
+        }
+        //  look up right
+        if (row > 1 && col <6) {
+            if (direction * data.board[row - 1][col + 1] < 0 && data.board[row - 2][col + 2] === 0) {
+                legalMoves.push([row - 2, col - 2]);
+            }
+        }
+    }
+
+
+
+    function getLegalJumps(row, col) {
+
+        console.log("get legal jumps ");
+        //if white
+        //eat down left
+        console.log("direction * data.board[row + 1][col - 1]: " + direction * data.board[row + 1][col - 1]);
+        if (row < 6 && col > 1 && direction * data.board[row + 1][col - 1] < 0) {
+            if (data.board[row + 2][col - 2] === 0) {
+                legalMoves.push([row + 2, col - 2]);
+                console.log("[row - 2, col - 2]: " + [row + 2, col - 2]);
+            }
+
+        }
+        //eat down right
+        if (row < 6 && col < 6 && direction * data.board[row + 1][col + 1] < 0) {
+            console.log('downright');
+            if (data.board[row + 2 * direction][col + 2] === 0) {
+                legalMoves.push([row + 2, col + 2]);
+            }
+
+        }
+        // combo => look up left
+        if (data.combo && row > 1 && col > 1) {
+            if (direction * data.board[row - 1][col - 1] < 0 && data.board[row - 2][col - 2] === 0) {
+                legalMoves.push([row - 2, col - 2]);
+            }
+
+
+        }
+        // combo => look up right
+        if (data.combo && row > 1 && col <6) {
+            if (direction * data.board[row - 1][col + 1] < 0 && data.board[row - 2][col + 2] === 0) {
+                legalMoves.push([row - 2, col - 2]);
+            }
+
+
+        }
+
+    }
+    function getLegalOneMove(row, col) {
+        //if white
+        if (direction > 0) {
+            if (row > 0) {
+                //look left 
+                if (col > 0) {
+                    if (data.board[row + direction][col - 1] === 0) {
+                        legalMoves.push([row + direction, col - 1]);
+                    }
+                }
+            }
+            //look right
+            if (col < 7) {
+                if (data.board[row + direction][col + 1] === 0) {
+                    legalMoves.push([row + direction, col + 1]);
+                }
+            }
+
+        }
+        //if black
+        else if (direction < 0) {
+            if (row > 0) {
+                //look left 
+                if (col > 0) {
+                    if (data.board[row + direction][col - 1] === 0) {
+                        legalMoves.push([row + direction, col - 1]);
+                    }
+                }
+            }
+            //look right
+            if (col < 7) {
+                if (data.board[row + direction][col + 1] === 0) {
+                    legalMoves.push([row + direction, col + 1]);
+                }
+            }
+
+        }
+    }
+
+    function addAvailableOption() {
+        for (let i = 0; i < legalMoves.length; i++) {
+            console.log("legalMoves: " + legalMoves);
+            let targetElement = document.getElementsByTagName('table')[0].rows[legalMoves[i][0]].cells[legalMoves[i][1]];
+            let targetDataCell = data.board[legalMoves[i][0]][legalMoves[i][1]];
+            //if different color
+            if (targetDataCell === 0) {
+                targetElement.classList.add('option');
+            }
+        }
+    }
+
+}
+
+
+
 
 function showPossibleMoves(row, col, combo, cellValue, callPaint = true) {
     //the possible moves are stored in legalMoves eg. [[1,3],[1,5]]
@@ -119,9 +357,9 @@ function showPossibleMoves(row, col, combo, cellValue, callPaint = true) {
         }
 
     }
-    if (callPaint) {
-        addAvailableOption(legalMoves);
-    }
+    // if (callPaint) {
+    //     addAvailableOption(legalMoves);
+    // }
 
     function lookRight(multiplyCells, direction) {
         //positive = friend =>don't eat
@@ -179,41 +417,5 @@ function showPossibleMoves(row, col, combo, cellValue, callPaint = true) {
             }
         }
     }
-
-
-
-    for (let i = 0; i < legalMoves.length; i++) {
-        data.movePool.push([legalMoves[i], Math.abs(legalMoves[i][0] - selected[0]) > 1])
-    }
     return (legalMoves.length);
-}
-function addAvailableOption(legalMoves) {
-    //if I can make a jump => remove all non-jump moves
-    let jump = false;
-    for (let i = 0; i < legalMoves.length; i++) {
-        if (Math.abs(legalMoves[i][0] - selected[0]) > 1) {
-            jump = true;
-            console.log('can jump');
-        }
-    }
-    if (jump) {
-        let i = 0;
-        while (i < legalMoves.length) {
-            if (Math.abs(legalMoves[i][0] - selected[0]) <= 1) {
-                legalMoves.splice(i, 1);
-            }
-            else {
-                i++;
-            }
-        }
-    }
-
-    for (let i = 0; i < legalMoves.length; i++) {
-        let targetElement = document.getElementsByTagName('table')[0].rows[legalMoves[i][0][0]].cells[legalMoves[i][0][1]];
-        let targetDataCell = data.board[legalMoves[i][0][0]][legalMoves[i][0][1]];
-        //if different color
-        if (targetDataCell === 0) {
-            targetElement.classList.add('option');
-        }
-    }
 }
