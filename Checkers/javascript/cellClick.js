@@ -44,7 +44,22 @@ function cellClick(row, col, data) {
                 //empty dead cell
                 data.board[selected[0]][selected[1]] = 0;
                 document.getElementById('game').rows[selected[0]].cells[selected[1]].className = 'dark-cell';
-
+                console.log("data.board[row][col]: " + data.board[row][col]);
+                //did I reach the end for black?
+                if(data.board[row][col]=== -1 &&row===0)
+                {
+                    
+                    alert('end of black');
+                    data.board[row][col]=2;
+                    document.getElementById('game').rows[row].cells[col].className='dark-cell black-queen';
+                }
+                //did I reach the end for white?
+                else if(data.board[row][col]=== 1 &&row ===7)
+                {
+                    alert('end of black');
+                    data.board[row][col]=-2;
+                    document.getElementById('game').rows[row].cells[col].className='dark-cell white-queen';
+                }
 
                 //if it was a hop
                 if (Math.abs(row - selected[0]) > 1) {
@@ -53,6 +68,7 @@ function cellClick(row, col, data) {
                     onEat();
                     
                 }
+                //if reached the end
                 //if I didn't eat => end turn
                 else {
                     data.deselct(row, col, cell);
@@ -60,7 +76,7 @@ function cellClick(row, col, data) {
                     data.combo=false;
                     changePlayer();
                 }
-
+                
             }
 
 

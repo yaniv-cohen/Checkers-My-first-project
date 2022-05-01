@@ -19,26 +19,7 @@ function showPossibleMoves(row, col, combo, cellValue) {
         if (col > 0) {
             let multiplyCells = data.board[row + direction][col - 1]
                 * cellValue;
-            //positive = friend =>don't eat
-            if (multiplyCells > 0) {
-                //do nothing
-            }
-            //0 is empty =>add it
-            else if (multiplyCells === 0 ) {
-                if( !combo)
-                {
-                legalMoves.push([row + direction, col - 1]);
-                }
-            }
-            //enemy => don't add, check next left
-            else {
-                //if i won't exit the boundary
-                if (row < 6 && (col > 1)) {
-                    if (data.board[row + (2 * direction)][col - 2] === 0) {
-                        legalMoves.push([row + (2 * direction), col - 2]);
-                    }
-                }
-            }
+            lookLeft(multiplyCells);
         }
 
         //look right
@@ -78,69 +59,77 @@ function showPossibleMoves(row, col, combo, cellValue) {
         //look left
         if (col > 0) {
             let multiplyCells = data.board[row + direction][col - 1]
-                * cellValue;
-            //positive = friend =>don't eat
-            if (multiplyCells > 0) {
-                //do nothing
-            }
-            //0 is empty =>add it
-            else if (multiplyCells === 0 ) {
-                if( !combo)
-                {
-                    legalMoves.push([row + direction, col - 1]);
-                }
-            }
-            //enemy => don't add, check next left
-            else {
-                console.log("enemy on the left: " + multiplyCells);
-                //if i won't exit the boundary
-                if (row > 1 && (col > 1)) {
-                    multiplyCells = data.board[row + (2 * direction)][col - 2] * cellValue;
-                    if (data.board[row + (2 * direction)][col - 2] === 0) {
-                        legalMoves.push([row + (2 * direction), col - 2]);
-                    }
-                }
-            }
+            * cellValue;
+            lookLeft(multiplyCells);
         }
-        if ((direction > 1 && row < 7) || (direction < 0 && row > 0)) {
 
-        }
         //look right
         if (col < 7) {
             let multiplyCells = data.board[row + direction][col + 1]
                 * cellValue;
-            //positive = friend =>don't eat
-            if (multiplyCells > 0) {
-                //do nothing
-            }
-            //0 is empty =>add it
-            else if (multiplyCells === 0 ) {
-                if( !combo)
-                {
-                legalMoves.push([row + direction, col + 1]);
-                }
-            }
-            //enemy => don't add, check next left
-            else {
-                //if i won't exit the boundary
-
-                if (row > 1 && (col < 6)) {
-                    multiplyCells = data.board[row + (2 * direction)][col + 2] * cellValue;
-                    if (data.board[row + (2 * direction)][col + 2] === 0) {
-                        legalMoves.push([row + (2 * direction), col + 2]);
-                    }
-                }
-            }
+             lookRight(multiplyCells);
         }
-        // if ((direction > 1 && row < 7) || (direction < 0 && row > 0)) {
 
-        // }
     }
 
     addAvailableOption(legalMoves);
 
 
 
+
+    function lookRight(multiplyCells) {
+        //positive = friend =>don't eat
+        if (multiplyCells > 0) {
+            //do nothing
+        }
+
+        //0 is empty =>add it
+        else if (multiplyCells === 0) {
+            if (!combo) {
+                legalMoves.push([row + direction, col + 1]);
+            }
+        }
+
+        //enemy => don't add, check next left
+        else {
+            //if i won't exit the boundary
+            if ((row <6 && direction>0) ||(row > 1&&direction<0) && (col < 6)) {
+                multiplyCells = data.board[row + (2 * direction)][col + 2] * cellValue;
+                if (data.board[row + (2 * direction)][col + 2] === 0) {
+                    legalMoves.push([row + (2 * direction), col + 2]);
+                }
+            }
+        }
+        return multiplyCells;
+    }
+
+    function lookLeft(multiplyCells) {
+        
+        //positive = friend =>don't eat
+        if (multiplyCells > 0) {
+            //do nothing
+        }
+
+        //0 is empty =>add it
+        else if (multiplyCells === 0) {
+            if (!combo) {
+                legalMoves.push([row + direction, col - 1]);
+            }
+        }
+
+        //enemy => don't add, check next left
+        else {
+            //if i won't exit the boundary
+            if ((
+                (direction <0 &&row > 1)|| (direction >0 &&row <6))
+                && (col > 1)) {
+                multiplyCells = data.board[row + (2 * direction)][col - 2] * cellValue;
+                if (data.board[row + (2 * direction)][col - 2] === 0) {
+                    legalMoves.push([row + (2 * direction), col - 2]);
+                }
+            }
+        }
+    }
 
     function addAvailableOption(legalMoves) {
         for (let i = 0; i < legalMoves.length; i++) {

@@ -18,6 +18,20 @@ background-color: slategrey;
 .black-piece{
     background-image: url('images/circle-black.svg');
 }
+
+
+.black-queen{
+    background-image: url('images/black-queen.png');
+    background-size: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.white-queen{
+    background-image: url('images/white-queen.png');
+    background-size: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 .selected{
     background-color: aquamarine;
 }
