@@ -3,13 +3,10 @@ function cellClick(row, col, data) {
     let cellValue = data.board[row][col];
     //if i have no piece selected
     if (selected.length == 0) {
-
-
         //if it is my piece
         if ((data.currentPlayer === "white" && data.board[row][col] > 0) ||
             (data.currentPlayer === "black" && data.board[row][col] < 0)) {
             //select this piece
-
             data.deleteOptions();
             data.select(row, col, cell);
             showPossibleMoves(row, col, false, cellValue);
@@ -26,11 +23,12 @@ function cellClick(row, col, data) {
             data.deleteOptions();
             //if I am not in a combo move
             if (!data.combo) {
-                data.select(row, col, cell)
+                data.select(row, col, cell);
                 showPossibleMoves(row, col, false, cellValue);
             }
             //if clicked on a diffrent unit during a combo - end turn
             else {
+                console.log("changePlayer(): ");
                 changePlayer();
             }
         }
@@ -44,39 +42,34 @@ function cellClick(row, col, data) {
                 //empty dead cell
                 data.board[selected[0]][selected[1]] = 0;
                 document.getElementById('game').rows[selected[0]].cells[selected[1]].className = 'dark-cell';
-                console.log("data.board[row][col]: " + data.board[row][col]);
+
+
                 //did I reach the end for black?
-                if(data.board[row][col]=== -1 &&row===0)
-                {
-                    
-                    alert('end of black');
-                    data.board[row][col]=2;
-                    document.getElementById('game').rows[row].cells[col].className='dark-cell black-queen';
+                if (data.board[row][col] === -1 && row === 0) {
+
+                    data.board[row][col] = -2;
+                    document.getElementById('game').rows[row].cells[col].className = 'dark-cell black-queen';
                 }
                 //did I reach the end for white?
-                else if(data.board[row][col]=== 1 &&row ===7)
-                {
-                    alert('end of black');
-                    data.board[row][col]=-2;
-                    document.getElementById('game').rows[row].cells[col].className='dark-cell white-queen';
+                else if (data.board[row][col] === 1 && row === 7) {
+
+                    data.board[row][col] = 2;
+                    document.getElementById('game').rows[row].cells[col].className = 'dark-cell white-queen';
                 }
 
                 //if it was a hop
                 if (Math.abs(row - selected[0]) > 1) {
-
-                    //remove eatten piece
                     onEat();
-                    
                 }
                 //if reached the end
-                //if I didn't eat => end turn
+                //if I moved and didn't eat => end turn
                 else {
                     data.deselct(row, col, cell);
                     data.deleteOptions();
-                    data.combo=false;
+                    data.combo = false;
                     changePlayer();
                 }
-                
+
             }
 
 
@@ -99,12 +92,11 @@ function cellClick(row, col, data) {
         data.select(row, col, cell);
         //I ate do a combo
         data.combo = true;
-        let continueCombo =showPossibleMoves(row, col, true, data.board[row][col]);
-        if(!continueCombo)
-        {
+        let continueCombo = showPossibleMoves(row, col, true, data.board[row][col]);
+        if (!continueCombo) {
             data.deselct(row, col, cell);
             data.deleteOptions();
-            data.combo=false;
+            data.combo = false;
             changePlayer();
         }
     }

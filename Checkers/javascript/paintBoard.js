@@ -26,7 +26,17 @@ function paintBoard() {
                 }
                 else if(data.board[row][col]===-1)
                 {
-                                        tdElement.classList.add('black-piece');
+                    tdElement.classList.add('black-piece');
+
+                }
+                else if(data.board[row][col]===2)
+                {
+                    tdElement.classList.add('white-queen');
+
+                }
+                else if(data.board[row][col]===-2)
+                {
+                    tdElement.classList.add('black-queen');
 
                 }
                 tdElement.addEventListener('click', function () { cellClick(row, col,data) })
