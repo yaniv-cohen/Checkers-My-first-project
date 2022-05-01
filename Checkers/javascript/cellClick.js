@@ -62,25 +62,42 @@ function cellClick(row, col, data) {
                     onEat();
                     data.countPieces();
                 }
-                //if reached the end
+
                 //if I moved and didn't eat => end turn
                 else {
                     data.deselct(row, col, cell);
                     data.deleteOptions();
                     data.combo = false;
                     changePlayer();
+                    //can the current player make a move?
+                    //if he can't than the 
+                    if (!canMakeMove(data.currentPlayer)) {
+                        changePlayer();
+                        winner(data.currentPlayer);
+                    }
+
+
+
+                    if (this.black_unit_count <= 0) {
+                        winner('white');
+                    }
+                    else if (this.white_unit_count <= 0) {
+                        winner('black');
+                    }
                 }
 
+
             }
 
-
-            //if it is not a valid move
-            else {
-                data.deselct(row, col, cell);
-                data.deleteOptions();
-            }
-            //  data.getMoves(row,col,direction);
         }
+
+
+        //if it is not a valid move
+        else {
+            data.deselct(row, col, cell);
+            data.deleteOptions();
+        }
+        //  data.getMoves(row,col,direction);
     }
     function onEat() {
         data.board[(row + selected[0]) / 2][(col + selected[1]) / 2] = 0;
@@ -110,4 +127,38 @@ function cellClick(row, col, data) {
             data.currentPlayer = 'white';
         }
     }
+
+    function canMakeMove(player) {
+        console.log("called canMakeMove " + player);
+        if (player == 'black') {
+            for (let i = 0; i < data.board.length; i++) {
+                for (let k = 0; k < data.board[i].length; k++) {
+
+                    //if the cell is black
+                    //if i have a possible move
+                    if (data.board[i][k] < 0 && showPossibleMoves(i, k, false, data.board[i][k], false) ) {
+                        console.log("showPossibleMoves(i, k, false, data.board[i][k], false): " + showPossibleMoves(i, k, false, data.board[i][k], false));
+                        return true;
+                    }
+                }
+            }
+        }
+        else if (player == 'white') {
+            for (let i = 0; i < data.board.length; i++) {
+                for (let k = 0; k < data.board[i].length; k++) {
+
+                    //if the cell is black
+                    //if i have a possible move
+                    if (data.board[i][k] > 0 && showPossibleMoves(i, k, false, data.board[i][k], false)) {
+                        console.log("showPossibleMoves(i, k, false, data.board[i][k], false): " + showPossibleMoves(i, k, false, data.board[i][k], false));
+                        
+                        return true;
+                    }
+                }
+            }
+        }
+    }
 }
+
+
+

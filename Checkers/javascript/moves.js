@@ -1,5 +1,5 @@
 //shows all possible moves and hops on the screen
-function showPossibleMoves(row, col, combo, cellValue) {
+function showPossibleMoves(row, col, combo, cellValue, callPaint=true) {
     //the possible moves are stored in legalMoves eg. [[1,3],[1,5]]
     let legalMoves = [];
     let direction;
@@ -9,40 +9,7 @@ function showPossibleMoves(row, col, combo, cellValue) {
     else {
         direction = -1;
     }
-    //get the moves in the boundaries, not taking
-    //  into account if the move is legal
-    // example output: [[1,3],[1,5]]
-
-
-
-    // //if white
-    // if (direction > 0 && row < 7) {
-    //     //look left
-    //     if (col > 0) {
-    //         let multiplyCells = data.board[row + direction][col - 1]
-    //             * cellValue;
-    //         lookLeft(multiplyCells, direction);
-    //         if ((cellValue === 2 || cellValue === -2) && row > 0) {
-    //             multiplyCells = data.board[row + (direction * -1)][col - 1]
-    //                 * cellValue;
-    //             lookLeft(multiplyCells, (direction * -1));
-    //         }
-    //     }
-
-    //     //look right
-    //     if (col < 7) {
-    //         let multiplyCells = data.board[row + direction][col + 1]
-    //             * cellValue;
-    //         lookRight(multiplyCells, direction);
-
-    //         if ((cellValue === 2 || cellValue === -2) && row > 0) {
-    //             multiplyCells = data.board[row + (direction * -1)][col + 1]
-    //                 * cellValue;
-    //             lookRight(multiplyCells, direction * -1);
-    //         }
-    //     }
-    // }
-
+    
     //if white
     if (direction > 0) {
         //look left 
@@ -54,7 +21,7 @@ function showPossibleMoves(row, col, combo, cellValue) {
                 lookLeft(multiplyCells, direction);
             }
             //look down left if queen
-            if (Math.abs(cellValue) === 2 && row > 0) {
+            if ((Math.abs(cellValue) === 2 ||combo) && row > 0) {
                 multiplyCells = data.board[row + (direction * -1)][col - 1]
                     * cellValue;
                 lookLeft(multiplyCells, direction * -1);
@@ -70,7 +37,7 @@ function showPossibleMoves(row, col, combo, cellValue) {
                 lookRight(multiplyCells, direction);
             }
             //look down right if queen
-            if (Math.abs(cellValue) === 2 && row > 0) {
+            if ((Math.abs(cellValue) === 2 ||combo) && row > 0) {
                 multiplyCells = data.board[row + (direction * -1)][col + 1]
                     * cellValue;
                 lookRight(multiplyCells, direction * -1);
@@ -90,7 +57,7 @@ function showPossibleMoves(row, col, combo, cellValue) {
                 lookLeft(multiplyCells, direction);
             }
             //look down left if queen
-            if (Math.abs(cellValue) === 2 && row < 7) {
+            if ((Math.abs(cellValue) === 2 ||combo) && row < 7) {
                 multiplyCells = data.board[row + (direction * -1)][col - 1]
                     * cellValue;
                 lookLeft(multiplyCells, direction * -1);
@@ -106,7 +73,7 @@ function showPossibleMoves(row, col, combo, cellValue) {
                 lookRight(multiplyCells, direction);
             }
             //look down right if queen
-            if (Math.abs(cellValue) === 2 && row < 7) {
+            if ((Math.abs(cellValue) === 2 ||combo) && row < 7) {
                 multiplyCells = data.board[row + (direction * -1)][col + 1]
                     * cellValue;
                 lookRight(multiplyCells, direction * -1);
@@ -114,8 +81,10 @@ function showPossibleMoves(row, col, combo, cellValue) {
         }
 
     }
-
-    addAvailableOption(legalMoves);
+if(callPaint)
+    {
+        addAvailableOption(legalMoves);
+    }
 
     function lookRight(multiplyCells, direction) {
         //positive = friend =>don't eat
@@ -169,18 +138,19 @@ function showPossibleMoves(row, col, combo, cellValue) {
         }
     }
 
-    function addAvailableOption(legalMoves) {
-        for (let i = 0; i < legalMoves.length; i++) {
-            let targetElement = document.getElementsByTagName('table')[0].rows[legalMoves[i][0]].cells[legalMoves[i][1]];
-            let targetDataCell = data.board[legalMoves[i][0]][legalMoves[i][1]];
-            //if different color
-            if (targetDataCell === 0) {
-                targetElement.classList.add('option');
-            }
+
+    console.log("return legalMoves: " + legalMoves.length);
+    return (legalMoves.length);
+}
+function addAvailableOption(legalMoves) {
+    for (let i = 0; i < legalMoves.length; i++) {
+        let targetElement = document.getElementsByTagName('table')[0].rows[legalMoves[i][0]].cells[legalMoves[i][1]];
+        let targetDataCell = data.board[legalMoves[i][0]][legalMoves[i][1]];
+        //if different color
+        if (targetDataCell === 0) {
+            targetElement.classList.add('option');
         }
-
-
     }
-    console.log("return legalMoves: " + legalMoves);
-    return (legalMoves.length > 0);
+
+
 }
