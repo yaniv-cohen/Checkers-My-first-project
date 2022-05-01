@@ -20,7 +20,7 @@ function showPossibleMoves(row, col, combo, cellValue, callPaint=true) {
                     * cellValue;
                 lookLeft(multiplyCells, direction);
             }
-            //look down left if queen
+            // if queen or combo => look down left
             if ((Math.abs(cellValue) === 2 ||combo) && row > 0) {
                 multiplyCells = data.board[row + (direction * -1)][col - 1]
                     * cellValue;
@@ -36,7 +36,7 @@ function showPossibleMoves(row, col, combo, cellValue, callPaint=true) {
                     * cellValue;
                 lookRight(multiplyCells, direction);
             }
-            //look down right if queen
+            //if queen or combo => look down right
             if ((Math.abs(cellValue) === 2 ||combo) && row > 0) {
                 multiplyCells = data.board[row + (direction * -1)][col + 1]
                     * cellValue;
@@ -56,7 +56,7 @@ function showPossibleMoves(row, col, combo, cellValue, callPaint=true) {
                     * cellValue;
                 lookLeft(multiplyCells, direction);
             }
-            //look down left if queen
+            //if queen or combo => look down left
             if ((Math.abs(cellValue) === 2 ||combo) && row < 7) {
                 multiplyCells = data.board[row + (direction * -1)][col - 1]
                     * cellValue;
@@ -72,7 +72,7 @@ function showPossibleMoves(row, col, combo, cellValue, callPaint=true) {
                     * cellValue;
                 lookRight(multiplyCells, direction);
             }
-            //look down right if queen
+            //if queen or combo => look down right
             if ((Math.abs(cellValue) === 2 ||combo) && row < 7) {
                 multiplyCells = data.board[row + (direction * -1)][col + 1]
                     * cellValue;
@@ -143,6 +143,30 @@ if(callPaint)
     return (legalMoves.length);
 }
 function addAvailableOption(legalMoves) {
+    //if I can make a jump => remove all non-jump moves
+    let jump =false;
+    for (let i = 0; i < legalMoves.length; i++) {
+        if(Math.abs(legalMoves[i][0] -selected[0])>1 )
+        {
+            jump=true;
+            console.log('can jump');
+        }
+    }
+    if(jump)
+    { 
+        let i=0;
+        while(i < legalMoves.length) {
+            if(Math.abs(legalMoves[i][0] -selected[0]) <=1 )
+            {
+                legalMoves.splice(i,1);
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
+    
     for (let i = 0; i < legalMoves.length; i++) {
         let targetElement = document.getElementsByTagName('table')[0].rows[legalMoves[i][0]].cells[legalMoves[i][1]];
         let targetDataCell = data.board[legalMoves[i][0]][legalMoves[i][1]];
