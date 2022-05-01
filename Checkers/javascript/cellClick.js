@@ -69,12 +69,7 @@ function cellClick(row, col, data) {
                     data.deleteOptions();
                     data.combo = false;
                     changePlayer();
-                    //can the current player make a move?
-                    //if he can't than the 
-                    if (!canMakeMove(data.currentPlayer)) {
-                        changePlayer();
-                        winner(data.currentPlayer);
-                    }
+
 
 
 
@@ -85,7 +80,12 @@ function cellClick(row, col, data) {
                         winner('black');
                     }
                 }
-
+                //can the current player make a move?
+                //if he can't than the 
+                if (!canMakeMove(data.currentPlayer)) {
+                    changePlayer();
+                    winner(data.currentPlayer,'no-moves');
+                }
 
             }
 
@@ -136,7 +136,7 @@ function cellClick(row, col, data) {
 
                     //if the cell is black
                     //if i have a possible move
-                    if (data.board[i][k] < 0 && showPossibleMoves(i, k, false, data.board[i][k], false) ) {
+                    if (data.board[i][k] < 0 && showPossibleMoves(i, k, false, data.board[i][k], false)) {
                         console.log("showPossibleMoves(i, k, false, data.board[i][k], false): " + showPossibleMoves(i, k, false, data.board[i][k], false));
                         return true;
                     }
@@ -151,7 +151,7 @@ function cellClick(row, col, data) {
                     //if i have a possible move
                     if (data.board[i][k] > 0 && showPossibleMoves(i, k, false, data.board[i][k], false)) {
                         console.log("showPossibleMoves(i, k, false, data.board[i][k], false): " + showPossibleMoves(i, k, false, data.board[i][k], false));
-                        
+
                         return true;
                     }
                 }
