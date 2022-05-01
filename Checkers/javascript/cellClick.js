@@ -1,24 +1,15 @@
 function cellClick(row, col, data) {
     let cell = document.getElementById('game').rows[row].cells[col];
-    let cellValue = data.board[row][col];
+
     //if i have no piece selected
     if (selected.length == 0) {
-        //if it is my piece
+        //if clicked on my piece
         if ((data.currentPlayer === "white" && data.board[row][col] > 0) ||
             (data.currentPlayer === "black" && data.board[row][col] < 0)) {
             //select this piece
             data.deleteOptions();
             data.select(row, col, cell);
-            data.canEat = false;
-            console.log('can eat :::' + data.canEat);
-            for (let i = 0; i < 8; i++) {
-                for (let k = 0; k < 8; k++) {
-                    if ((data.currentPlayer === "white" && data.board[i][k] > 0) || 
-                    (data.currentPlayer === "black" && data.board[i][k] < 0))
-                        getAllMoves(row, col, false);
-                        console.log('can eat :::' + data.canEat);
-                }
-            }
+            data.canIEat();            
             getAllMoves(row, col);
             // data.movePool.push(showPossibleMoves(row, col, false, cellValue));
         }
@@ -37,13 +28,14 @@ function cellClick(row, col, data) {
             console.log('can eat :::' + data.canEat);
             for (let i = 0; i < 8; i++) {
                 for (let k = 0; k < 8; k++) {
-                    if ((data.currentPlayer === "white" && data.board[i][k] > 0) || 
-                    (data.currentPlayer === "black" && data.board[i][k] < 0))
+                    if ((data.currentPlayer === "white" && data.board[i][k] > 0) ||
+                        (data.currentPlayer === "black" && data.board[i][k] < 0))
+                        data.canIEat();
                         getAllMoves(row, col, false);
-                        
+
                 }
             }
-            console.log('can eat :::' + data.canEat);
+            data.canIEat();
             getAllMoves(row, col);
             //if clicked on a diffrent unit during a combo - end turn
             // else {
@@ -53,6 +45,20 @@ function cellClick(row, col, data) {
         }
         //if i clicked on an empty cell
         else if (data.board[row][col] === 0) {
+            data.canEat = false;
+            console.log('can eat :::' + data.canEat);
+            for (let i = 0; i < 8; i++) {
+                for (let k = 0; k < 8; k++) {
+                    if ((data.currentPlayer === "white" && data.board[i][k] > 0) ||
+                        (data.currentPlayer === "black" && data.board[i][k] < 0))
+                        data.canIEat();
+                        getAllMoves(row, col, false);
+
+                }
+            }
+            data.canIEat();
+            getAllMoves(row, col);
+            console.log("eat "+ data.canEat);
             //if it is a valid move
             if (cell.classList.contains('option')) {
                 //copy the selected cell value and classes 
@@ -77,8 +83,23 @@ function cellClick(row, col, data) {
                 }
 
                 //if it was a hop
-                if (Math.abs(row - selected[0]) > 1) {
-                    onEat();
+                if (data.combo) {
+                    //console.log(select);
+                    //console.log()
+                    onEat()
+                    data.combo = true;
+                    data.canEat=false;
+                    getAllMoves(row,col,false);
+                    if(data.canEat)
+                    {
+                        getAllMoves(row,col);
+                    }
+
+                    else if (!data.canEat) {
+                        console.log('end of combo , because nothing to eat');
+                        changePlayer();
+                        cellClick(1, 1, data);
+                    }
                     data.countPieces();
                 }
 
@@ -87,7 +108,7 @@ function cellClick(row, col, data) {
                     data.deselct(row, col, cell);
                     data.deleteOptions();
                     data.combo = false;
-                    // changePlayer();
+                    changePlayer();
 
 
 
@@ -101,10 +122,10 @@ function cellClick(row, col, data) {
                 }
                 //can the current player make a move?
                 //if he can't than the 
-                if (!canMakeMove(data.currentPlayer)) {
-                    // changePlayer();
-                    winner(data.currentPlayer, 'no-moves');
-                }
+                // if (!canMakeMove(data.currentPlayer)) {
+                //     changePlayer();
+                //     winner(data.currentPlayer, 'no-moves');
+                // }
 
             }
 
@@ -119,23 +140,19 @@ function cellClick(row, col, data) {
         //  data.getMoves(row,col,direction);
     }
     function onEat() {
-        data.board[(row + selected[0]) / 2][(col + selected[1]) / 2] = 0;
-        document.getElementById('game').rows[(row + selected[0]) / 2].cells[(col + selected[1]) / 2].className = 'dark-cell';
+        let targetRow = selected[0]<row ? row-1 : row+1 ;
+        let targetCol = selected[0]<col ? col-1 : col+1 ;
 
+        data.board[targetRow][targetCol] = 0;
+        document.getElementById('game').rows[targetRow].cells[targetCol].className = 'dark-cell';
         // click on the new cell
         //update selected to the new cell
+        
         data.deselct();
         data.deleteOptions();
-        data.select(row, col, cell);
+        data.select(row, col,document.getElementById('game').rows[row].cells[col] );
         //I ate do a combo
         data.combo = true;
-        // let continueCombo = showPossibleMoves(row, col, true, data.board[row][col]);
-        // if (!continueCombo) {
-        //     data.deselct(row, col, cell);
-        //     data.deleteOptions();
-        //     data.combo = false;
-        //     // changePlayer();
-        // }
     }
 
     function changePlayer() {

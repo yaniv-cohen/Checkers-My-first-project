@@ -1,5 +1,5 @@
 //return all possible moves for selected unit
-function getAllMoves(row, col,paint =true) {
+function getAllMoves(row, col, paint = true) {
     let legalMoves = [];
     let direction;
     if (data.currentPlayer == "white") {
@@ -10,52 +10,58 @@ function getAllMoves(row, col,paint =true) {
     }
     //white normal piece
     if (Math.abs(data.board[row][col]) == 1) {
-
         getLegalJumps(row, col);
-
-        if (legalMoves.length == 0 &&!data.combo) {
+        if(legalMoves.length>0)
+        {
+            data.canEat=true;
+        }
+        else if (legalMoves.length == 0 && !data.combo && !data.canEat) {
             getLegalOneMove(row, col);
         }
-        else{
-            data.canEat = true;
-        }
-    }
-    //white queen
-    else if (Math.abs(data.board[row][col]) == 2) {
-        getLegalQueenJumps(row, col);
-        if (!data.combo) {
-            getLegalQueenFirstMoveJump(row, col);
-            if (legalMoves.length == 0 &&!data.canEat) {
-                getLegalQueenFirstMoves(row, col);
-                //TODO: end player turn
-            }
-            else
-            {
-                data.canEat = true;
-            }
+        
+        if(data.combo)
+        {
+            getLegalQueenJumps(row,col);
         }
         
     }
-    if(paint)
-    {
-    addAvailableOption();
-}
+    //queen
+    else if (Math.abs(data.board[row][col]) == 2) {
+        getLegalQueenJumps(row, col);
+        if (legalMoves.length > 0) {
+            data.canEat = true;
+        }
+        if (!data.combo) {
+            getLegalQueenFirstMoveJump(row, col);
+            if (legalMoves.length > 0) {
+                data.canEat = true;
+            }
+            //if i can not eat myself, and neither can any of my other units
+            if (legalMoves.length == 0 && !data.canEat) {
+                getLegalQueenFirstMoves(row, col);
+                //TODO: end player turn
+            }
+
+        }
+
+    }
+    if (paint) {
+        addAvailableOption();
+    }
     function getLegalQueenFirstMoveJump(row, col) {
-        //if white
         //eat down right + +
         for (let i = 0; row + 1 + i < 7 && col + 1 + i < 7; i++) {
             if (row < 6 && col < 6 && direction * data.board[row + 1 + i][col + 1 + i] < 0) {
                 if (data.board[row + 2 + i][col + 2 + i] === 0) {
                     legalMoves.push([row + 2 + i, col + 2 + i]);
                 }
-         
                 break;
             }
         }
         //eat down left + -
-        for (let i = 0; row + 1 + i < 7 && col - 1- i >0; i++) {
-            console.log('dl');
-            if (row < 6 && col >1  && direction * data.board[row + 1 + i][col - 1 - i] < 0) {
+        for (let i = 0; row + 1 + i < 7 && col - 1 - i > 0; i++) {
+            
+            if (row < 6 && col > 1 && direction * data.board[row + 1 + i][col - 1 - i] < 0) {
                 if (data.board[row + 2 + i][col - 2 - i] === 0) {
                     legalMoves.push([row + 2 + i, col - 2 - i]);
                 }
@@ -64,24 +70,26 @@ function getAllMoves(row, col,paint =true) {
             }
         }
         //eat up left - -
-        for (let i = 0; row - 1 - i>0 && col - 1- i >0; i++) {
-            console.log('ul');
-            if (row >1 && col >1  && direction * data.board[row - 1 - i][col - 1 - i] < 0) {
+        for (let i = 0; row - 1 - i > 0 && col - 1 - i > 0; i++) {
+            
+            if (row > 0 && col > 0 && direction * data.board[row - 1 - i][col - 1 - i] < 0) {
                 if (data.board[row - 2 - i][col - 2 - i] === 0) {
                     legalMoves.push([row - 2 - i, col - 2 - i]);
                 }
- 
+
                 break;
             }
         }
         //eat up right - -
-        for (let i = 0; row - 1 - i>0 && col - 1- i >0; i++) {
-            console.log('ur');
-            if (row >1 && col >1  && direction * data.board[row - 1 - i][col + 1 + i] < 0) {
+        for (let i = 0; row - 1 - i > 0 &&  col + 1 + i < 7 ; i++) {
+           
+            console.log(col + 1 + i  );
+            if (row > 0 && col <7 && direction * data.board[row - 1 - i][col + 1 + i] < 0) {
+                console.log('i '+i);
                 if (data.board[row - 2 - i][col + 2 + i] === 0) {
                     legalMoves.push([row - 2 - i, col + 2 + i]);
                 }
- 
+
                 break;
             }
         }
@@ -91,29 +99,28 @@ function getAllMoves(row, col,paint =true) {
     }
     function getLegalQueenFirstMoves() {
 
-        console.log("get legal moves for the queen");
         //if white
         //move down right + +
         for (let i = 0; row + 1 + i <= 7 && col + 1 + i <= 7; i++) {
-            if (row < 6 && col < 6 ) {
+            if (row < 6 && col < 6) {
                 if (data.board[row + 1 + i][col + 1 + i] === 0) {
                     legalMoves.push([row + 1 + i, col + 1 + i]);
                 }
-                else{
+                else {
 
                     break;
-                } 
+                }
             }
         }
-        
+
         //move down left - -
-        for (let i = 0; row + 1 + i <= 7 && col - 1- i >=0; i++) {
-            console.log('dl');
-            if (row < 6 && col > 1 ) {
+        for (let i = 0; row + 1 + i <= 7 && col - 1 - i >= 0; i++) {
+            
+            if (row < 6 && col > 1) {
                 if (data.board[row + 1 + i][col - 1 - i] === 0) {
                     legalMoves.push([row + 1 + i, col - 1 - i]);
                 }
-                else{
+                else {
 
                     break;
                 }
@@ -123,13 +130,13 @@ function getAllMoves(row, col,paint =true) {
         }
 
         //move up left - +
-        for (let i = 0; row - 1 - i >= 0 && col - 1- i >=0; i++) {
-            console.log('ul');
-            if (row >1 && col > 1 ) {
+        for (let i = 0; row - 1 - i >= 0 && col - 1 - i >= 0; i++) {
+            
+            if (row > 1 && col > 1) {
                 if (data.board[row - 1 - i][col - 1 - i] === 0) {
                     legalMoves.push([row - 1 - i, col - 1 - i]);
                 }
-                else{
+                else {
 
                     break;
                 }
@@ -138,14 +145,14 @@ function getAllMoves(row, col,paint =true) {
 
         }
         //move up right + -
-        for (let i = 0; row - 1 - i >= 0 && col + 1+ i <=7; i++) {
-            console.log('ur');
-            if (row <6 && col < 6 ) {
+        for (let i = 0; row - 1 - i >= 0 && col + 1 + i <= 7; i++) {
+            
+            if (row < 6 && col < 6) {
                 if (data.board[row - 1 - i][col + 1 + i] === 0) {
                     legalMoves.push([row - 1 - i, col + 1 + i]);
                 }
-                else{
-
+                else {
+                    
                     break;
                 }
 
@@ -157,34 +164,28 @@ function getAllMoves(row, col,paint =true) {
 
     }
     function getLegalQueenJumps(row, col) {
-
-        console.log("get legal queen jump ");
-        //if white
-        //eat down left
-        
+        //eat down left + -
         if (row < 6 && col > 1 && direction * data.board[row + 1][col - 1] < 0) {
             if (data.board[row + 2][col - 2] === 0) {
                 legalMoves.push([row + 2, col - 2]);
-                console.log("[row - 2, col - 2]: " + [row + 2, col - 2]);
             }
         }
-        //eat down right
+        //eat down right + +
         if (row < 6 && col < 6 && direction * data.board[row + 1][col + 1] < 0) {
-            console.log('downright');
             if (data.board[row + 2 * direction][col + 2] === 0) {
                 legalMoves.push([row + 2, col + 2]);
             }
         }
         // look up left
-        if ( row > 1 && col > 1) {
+        if (row > 1 && col > 1 && direction * data.board[row - 1][col - 1] < 0) {
             if (direction * data.board[row - 1][col - 1] < 0 && data.board[row - 2][col - 2] === 0) {
                 legalMoves.push([row - 2, col - 2]);
             }
         }
         //  look up right
-        if (row > 1 && col <6) {
+        if (row > 1 && col < 6 && direction * data.board[row - 1][col + 1] < 0) {
             if (direction * data.board[row - 1][col + 1] < 0 && data.board[row - 2][col + 2] === 0) {
-                legalMoves.push([row - 2, col - 2]);
+                legalMoves.push([row - 2, col + 2]);
             }
         }
     }
@@ -192,62 +193,87 @@ function getAllMoves(row, col,paint =true) {
 
 
     function getLegalJumps(row, col) {
+        // console.log("get legal jumps ");
 
-        console.log("get legal jumps ");
         //if white
         //eat down left
-        console.log("direction * data.board[row + 1][col - 1]: " + direction * data.board[row + 1][col - 1]);
-        if (row < 6 && col > 1 && direction * data.board[row + 1][col - 1] < 0) {
-            if (data.board[row + 2][col - 2] === 0) {
-                legalMoves.push([row + 2, col - 2]);
-                console.log("[row - 2, col - 2]: " + [row + 2, col - 2]);
+        if (data.board[row][col] > 0) {
+            if (row < 6 && col > 1 && direction * data.board[row + 1][col - 1] < 0) {
+                if (data.board[row + 2][col - 2] === 0) {
+                    legalMoves.push([row + 2, col - 2]);
+                }
             }
+            //eat down right
+            if (row < 6 && col < 6 && direction * data.board[row + 1][col + 1] < 0) {
+                if (data.board[row + 2 * direction][col + 2] === 0) {
+                    legalMoves.push([row + 2, col + 2]);
+                }
+            }
+            // // combo => look up left
+            // if (data.combo && row > 1 && col > 1) {
+            //     if (direction * data.board[row - 1][col - 1] < 0 && data.board[row - 2][col - 2] === 0) {
+            //         legalMoves.push([row - 2, col - 2]);
+            //     }
+
+
+            // }
+            // // combo => look up right
+            // if (data.combo && row > 1 && col < 6) {
+            //     if (direction * data.board[row - 1][col + 1] < 0 && data.board[row - 2][col + 2] === 0) {
+            //         legalMoves.push([row - 2, col - 2]);
+            //     }
+
+
+            // }
+        }
+        else if (direction < 0) {
+            // combo => look up left
+            if (row > 1 && col > 1) {
+                if (direction * data.board[row - 1][col - 1] < 0 && data.board[row - 2][col - 2] === 0) {
+                    legalMoves.push([row - 2, col - 2]);
+                }
+            }
+            // combo => look up right
+            if (row > 1 && col < 6) {
+                if (direction * data.board[row - 1][col + 1] < 0 && data.board[row - 2][col + 2] === 0) {
+                    legalMoves.push([row - 2, col + 2]);
+                }
+            }
+            // if (data.combo && (row < 6 && col > 1 && direction * data.board[row + 1][col - 1] < 0)) {
+            //     if (data.board[row + 2][col - 2] === 0) {
+            //         legalMoves.push([row + 2, col - 2]);
+            //     }
+
+            // }
+            // //eat down right
+            // if (data.combo && (row < 6 && col < 6 && direction * data.board[row + 1][col + 1] < 0)) {
+            //     if (data.board[row + 2 * direction][col + 2] === 0) {
+            //         legalMoves.push([row + 2, col + 2]);
+            //     }
+            // }
+
 
         }
-        //eat down right
-        if (row < 6 && col < 6 && direction * data.board[row + 1][col + 1] < 0) {
-            console.log('downright');
-            if (data.board[row + 2 * direction][col + 2] === 0) {
-                legalMoves.push([row + 2, col + 2]);
-            }
-
-        }
-        // combo => look up left
-        if (data.combo && row > 1 && col > 1) {
-            if (direction * data.board[row - 1][col - 1] < 0 && data.board[row - 2][col - 2] === 0) {
-                legalMoves.push([row - 2, col - 2]);
-            }
-
-
-        }
-        // combo => look up right
-        if (data.combo && row > 1 && col <6) {
-            if (direction * data.board[row - 1][col + 1] < 0 && data.board[row - 2][col + 2] === 0) {
-                legalMoves.push([row - 2, col - 2]);
-            }
-
-
-        }
-
     }
     function getLegalOneMove(row, col) {
         //if white
         if (direction > 0) {
-            if (row > 0) {
-                //look left 
+            if (row < 7) {
+
+                //look down left
                 if (col > 0) {
                     if (data.board[row + direction][col - 1] === 0) {
                         legalMoves.push([row + direction, col - 1]);
                     }
                 }
-            }
-            //look right
-            if (col < 7) {
-                if (data.board[row + direction][col + 1] === 0) {
-                    legalMoves.push([row + direction, col + 1]);
+
+                //look down right
+                if (col < 7) {
+                    if (data.board[row + direction][col + 1] === 0) {
+                        legalMoves.push([row + direction, col + 1]);
+                    }
                 }
             }
-
         }
         //if black
         else if (direction < 0) {
@@ -258,14 +284,14 @@ function getAllMoves(row, col,paint =true) {
                         legalMoves.push([row + direction, col - 1]);
                     }
                 }
-            }
-            //look right
-            if (col < 7) {
-                if (data.board[row + direction][col + 1] === 0) {
-                    legalMoves.push([row + direction, col + 1]);
+
+                //look right
+                if (col < 7) {
+                    if (data.board[row + direction][col + 1] === 0) {
+                        legalMoves.push([row + direction, col + 1]);
+                    }
                 }
             }
-
         }
     }
 
