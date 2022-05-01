@@ -1,3 +1,4 @@
+
 function initializeGame()
 {
 let settinggs =['','',''];

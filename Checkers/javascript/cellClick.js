@@ -60,6 +60,7 @@ function cellClick(row, col, data) {
                 //if it was a hop
                 if (Math.abs(row - selected[0]) > 1) {
                     onEat();
+                    data.countPieces();
                 }
                 //if reached the end
                 //if I moved and didn't eat => end turn
