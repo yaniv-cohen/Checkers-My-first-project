@@ -1,100 +1,97 @@
 //return all possible moves for selected unit
+//if the piece can eat, set data.canEat to 'true'
+//by default, paint the possible moves unless paint is false
 function getAllMoves(row, col, paint = true) {
-    let legalMoves = [];
-    let direction;
+    let legalMoves = []; //stores possible moves
+    let direction; //does this piece go up or down
     if (data.currentPlayer == "white") {
         direction = 1;
     }
     else {
         direction = -1;
     }
-    //white normal piece
+    //if the unit is a normal piece
     if (Math.abs(data.board[row][col]) == 1) {
-        
+        //can I eat forward? if yes store answer as data.canEat
         getLegalJumps(row, col);
-
-        if(legalMoves.length>0)
-        {
-            data.canEat=true;
-            // console.log("data.canEat: " + data.canEat);
-        }
-        else if (legalMoves.length == 0 && !data.combo && !data.canEat) {
-            
-            getLegalOneMove(row, col);
-        }
-        
-        if(data.combo && !data.settings[0])
-        {
-            console.log('call getLegalQueenJumps piece at ' +row+ col);
-            getLegalQueenJumps(row,col);
-            if(legalMoves.length>0)
-        {
-            data.canEat=true;
-            // console.log("data.canEat: " + data.canEat);
-        }
-        }
-        
-    }
-    //queen
-    else if (Math.abs(data.board[row][col]) == 2) {
-
-
-        if(!data.settings[1])
-        {
-        getLegalQueenJumps(row, col);
         if (legalMoves.length > 0) {
             data.canEat = true;
         }
-        if (!data.combo) {
-            getLegalQueenFirstMoveJump(row, col);
+        //if I can't eat with any of my units
+        else if (!data.combo && !data.canEat) {
+            //can I move forward
+            getLegalOneMove(row, col);
+        }
+        //if I just ate with ths piece, and the settings allow it
+        if (data.combo && !data.settings[0]) {
+            //look for a unit to eat in all directions
+            getLegalQueenJumps(row, col);
             if (legalMoves.length > 0) {
                 data.canEat = true;
             }
-            //if i can not eat myself, and neither can any of my other units
+        }
+    }
+    //if the unit is a Queen
+    else if (Math.abs(data.board[row][col]) == 2) {
+        //normal settings
+        if (!data.settings[1]) {
+            //can I eat in 4 directions at a distance  of 1 cell
+            getLegalQueenJumps(row, col);
+            if (legalMoves.length > 0) {
+                data.canEat = true;
+            }
+            //if I didn't just eat with this Queen
+            if (!data.combo) {
+                //can I jump-eat?
+                getLegalQueenFirstMoveJump(row, col);
+                if (legalMoves.length > 0) {
+                    data.canEat = true;
+                }
+                //if i can not eat or jump-eat, and neither can any of my other units
+                //show movement to any distance
+                if (legalMoves.length == 0 && !data.canEat) {
+                    getLegalQueenFirstMoves(row, col);
+                }
+            }
+        }
+        //'only one cell movement' setting
+        else {
+            //can I eat in 4 directions at a distance  of 1 cell
+            getLegalQueenJumps(row, col);
+            if (legalMoves.length > 0) {
+                data.canEat = true;
+            }
+            //if no unit can eat - allow queen to move 1 cell in any direction
             if (legalMoves.length == 0 && !data.canEat) {
-                getLegalQueenFirstMoves(row, col);
-            }
-
-        }
-    }
-    else
-    {
-        getLegalQueenJumps(row, col);
-        if (legalMoves.length > 0) {
-            data.canEat = true;
-        }
-        if (legalMoves.length == 0 && !data.canEat) {
-            //down right
-            if (row < 7 && col < 7) {
-                if (data.board[row + 1  ][col + 1  ] === 0) {
-                    legalMoves.push([row + 1  , col + 1  ]);
+                //down right
+                if (row < 7 && col < 7) {
+                    if (data.board[row + 1][col + 1] === 0) {
+                        legalMoves.push([row + 1, col + 1]);
+                    }
                 }
-            }
-            //down left
-            if (row < 7 && col >=0) {
+                //down left
+                if (row < 7 && col >= 0) {
 
-                if (data.board[row + 1 ][col - 1] === 0) {
-                    legalMoves.push([row + 1  , col - 1  ]);
-                }
-            }
-
-            //up left
-            if (row > 0 && col > 0) {
-                if (data.board[row - 1  ][col - 1  ] === 0) {
-                    legalMoves.push([row - 1  , col - 1  ]);
-                }
-            }
-
-            //up right
-            if (row > 0 && col < 7) {
-                if (data.board[row - 1 ][col + 1 ] === 0) {
-                    legalMoves.push([row - 1 , col + 1 ]);
+                    if (data.board[row + 1][col - 1] === 0) {
+                        legalMoves.push([row + 1, col - 1]);
+                    }
                 }
 
+                //up left
+                if (row > 0 && col > 0) {
+                    if (data.board[row - 1][col - 1] === 0) {
+                        legalMoves.push([row - 1, col - 1]);
+                    }
+                }
 
+                //up right
+                if (row > 0 && col < 7) {
+                    if (data.board[row - 1][col + 1] === 0) {
+                        legalMoves.push([row - 1, col + 1]);
+                    }
+                }
             }
         }
-    }
     }
     if (paint) {
         addAvailableOption();
@@ -112,7 +109,7 @@ function getAllMoves(row, col, paint = true) {
         }
         //eat down left + -
         for (let i = 0; row + 1 + i < 7 && col - 1 - i > 0; i++) {
-            
+
             if (row < 6 && col > 1 && direction * data.board[row + 1 + i][col - 1 - i] < 0) {
                 if (data.board[row + 2 + i][col - 2 - i] === 0) {
                     legalMoves.push([row + 2 + i, col - 2 - i]);
@@ -123,7 +120,7 @@ function getAllMoves(row, col, paint = true) {
         }
         //eat up left - -
         for (let i = 0; row - 1 - i > 0 && col - 1 - i > 0; i++) {
-            
+
             if (row > 0 && col > 0 && direction * data.board[row - 1 - i][col - 1 - i] < 0) {
                 if (data.board[row - 2 - i][col - 2 - i] === 0) {
                     legalMoves.push([row - 2 - i, col - 2 - i]);
@@ -133,11 +130,8 @@ function getAllMoves(row, col, paint = true) {
             }
         }
         //eat up right - -
-        for (let i = 0; row - 1 - i > 0 &&  col + 1 + i < 7 ; i++) {
-           
-            console.log(col + 1 + i  );
-            if (row > 0 && col <7 && direction * data.board[row - 1 - i][col + 1 + i] < 0) {
-                console.log('i '+i);
+        for (let i = 0; row - 1 - i > 0 && col + 1 + i < 7; i++) {
+            if (row > 0 && col < 7 && direction * data.board[row - 1 - i][col + 1 + i] < 0) {
                 if (data.board[row - 2 - i][col + 2 + i] === 0) {
                     legalMoves.push([row - 2 - i, col + 2 + i]);
                 }
@@ -165,7 +159,7 @@ function getAllMoves(row, col, paint = true) {
 
         //move down left + -
         for (let i = 0; row + 1 + i <= 7 && col - 1 - i >= 0; i++) {
-            if (row <= 7 && col >=0) {
+            if (row <= 7 && col >= 0) {
 
                 if (data.board[row + 1 + i][col - 1 - i] === 0) {
                     legalMoves.push([row + 1 + i, col - 1 - i]);
@@ -180,7 +174,7 @@ function getAllMoves(row, col, paint = true) {
 
         //move up left - +
         for (let i = 0; row - 1 - i >= 0 && col - 1 - i >= 0; i++) {
-            
+
             if (row > 0 && col > 0) {
                 if (data.board[row - 1 - i][col - 1 - i] === 0) {
                     legalMoves.push([row - 1 - i, col - 1 - i]);
@@ -198,17 +192,15 @@ function getAllMoves(row, col, paint = true) {
                     legalMoves.push([row - 1 - i, col + 1 + i]);
                 }
                 else {
-                    
+
                     break;
                 }
 
             }
 
         }
-
-
-
     }
+    //add the cell the queen can eat in order to get to
     function getLegalQueenJumps(row, col) {
         //eat down left + -
         if (row < 6 && col > 1 && direction * data.board[row + 1][col - 1] < 0) {
@@ -219,7 +211,7 @@ function getAllMoves(row, col, paint = true) {
         //eat down right + +
         if (row < 6 && col < 6 && direction * data.board[row + 1][col + 1] < 0) {
             if (data.board[row + 2][col + 2] === 0) {
-                console.log("eat down right: " );
+                console.log("eat down right: ");
                 legalMoves.push([row + 2, col + 2]);
             }
         }
@@ -237,28 +229,24 @@ function getAllMoves(row, col, paint = true) {
         }
     }
 
-
-
+    //can this normal piece eat forward?
     function getLegalJumps(row, col) {
-        // console.log("get legal jumps ");
-
-        //if white
-        //eat down left
+        //if white look down
         if (data.board[row][col] > 0) {
+            //look down left
             if (row < 6 && col > 1 && direction * data.board[row + 1][col - 1] < 0) {
                 if (data.board[row + 2][col - 2] === 0) {
                     legalMoves.push([row + 2, col - 2]);
                 }
             }
-            //eat down right
+            //look down right
             if (row < 6 && col < 6 && direction * data.board[row + 1][col + 1] < 0) {
                 if (data.board[row + 2 * direction][col + 2] === 0) {
                     legalMoves.push([row + 2, col + 2]);
                 }
             }
-
         }
-        //if black
+        //if black look up
         else if (direction < 0) {
             //look up left
             if (row > 1 && col > 1) {
@@ -272,13 +260,11 @@ function getAllMoves(row, col, paint = true) {
                     legalMoves.push([row - 2, col + 2]);
                 }
             }
-
-
-
         }
     }
+    //can this normal piece move 1 cell?
     function getLegalOneMove(row, col) {
-        //if white
+        //if the piece is white
         if (direction > 0) {
             if (row < 7) {
 
@@ -297,7 +283,7 @@ function getAllMoves(row, col, paint = true) {
                 }
             }
         }
-        //if black
+        //if the piece is black
         else if (direction < 0) {
             if (row > 0) {
                 //look left 
@@ -317,153 +303,17 @@ function getAllMoves(row, col, paint = true) {
         }
     }
 
+    //show movement and eating options on the board
     function addAvailableOption() {
         for (let i = 0; i < legalMoves.length; i++) {
             console.log("legalMoves: " + legalMoves);
             let targetElement = document.getElementsByTagName('table')[0].rows[legalMoves[i][0]].cells[legalMoves[i][1]];
             let targetDataCell = data.board[legalMoves[i][0]][legalMoves[i][1]];
-            //if different color
+            //make sure the target is empty --SAFTY--
             if (targetDataCell === 0) {
                 targetElement.classList.add('option');
             }
         }
     }
 
-}
-
-
-
-
-function showPossibleMoves(row, col, combo, cellValue, callPaint = true) {
-    //the possible moves are stored in legalMoves eg. [[1,3],[1,5]]
-    let legalMoves = [];
-    let direction;
-    if (data.currentPlayer == "white") {
-        direction = 1;
-    }
-    else {
-        direction = -1;
-    }
-
-    //if white
-    if (direction > 0) {
-        //look left 
-        if (col > 0) {
-            legalMoves.push(getNormalMovesLeft());
-        }
-        //look right
-        if (col < 7) {
-
-            if (row < 7) {
-                //look up right
-                let multiplyCells = data.board[row + direction][col + 1]
-                    * cellValue;
-                lookRight(multiplyCells, direction);
-            }
-            //if queen or combo => look down right
-            if ((Math.abs(cellValue) === 2 || combo) && row > 0) {
-                console.log('added' + row + (direction * -1) + ' ' + [col + 1]);
-                multiplyCells = data.board[row + (direction * -1)][col + 1]
-                    * cellValue;
-                lookRight(multiplyCells, direction * -1);
-            }
-        }
-
-    }
-
-    //if black
-    else if (direction < 0) {
-        //look left 
-        if (col > 0) {
-            if (row < 7) {
-                //look first left
-                let multiplyCells = data.board[row + direction][col - 1] * cellValue;
-                lookLeft(multiplyCells, direction);
-            }
-
-            // if queen or combo => look down left
-            if ((Math.abs(cellValue) === 2 || combo) && row > 0) {
-                multiplyCells = data.board[row + (direction * -1)][col + (1 - 2 * (side === 'left'))]
-                    * cellValue;
-                lookLeft(multiplyCells, direction * -1);
-            }
-        }
-        //look right
-        if (col < 7) {
-            if (row > 0) {
-                //look up right
-                let multiplyCells = data.board[row + direction][col + 1]
-                    * cellValue;
-                lookRight(multiplyCells, direction);
-            }
-            //if queen or combo => look down right
-            if ((Math.abs(cellValue) === 2 || combo) && row < 7) {
-                multiplyCells = data.board[row + (direction * -1)][col + 1]
-                    * cellValue;
-                lookRight(multiplyCells, direction * -1);
-            }
-        }
-
-    }
-    // if (callPaint) {
-    //     addAvailableOption(legalMoves);
-    // }
-
-    function lookRight(multiplyCells, direction) {
-        //positive = friend =>don't eat
-
-        if (multiplyCells > 0) {
-            //do nothing
-        }
-
-        //0 is empty =>add it
-        else if (multiplyCells === 0) {
-            if (!combo) {
-                legalMoves.push([[row + direction, col + 1], [row, col]]);
-            }
-        }
-
-        //enemy => don't add, check next left
-        else {
-            //if i won't exit the boundary
-            if ((row < 6 && direction > 0) || (row > 1 && direction < 0) && (col < 6)) {
-                multiplyCells = data.board[row + (2 * direction)][col + 2] * cellValue;
-                if (data.board[row + (2 * direction)][col + 2] === 0) {
-                    legalMoves.push([[row + (2 * direction), col + 2], [row, col]]);
-                }
-            }
-        }
-        return multiplyCells;
-    }
-    function getNormalMovesLeft() {
-
-    }
-    function lookLeft(multiplyCells, direction) {
-        //positive = friend =>don't eat
-        if (multiplyCells > 0) {
-            //do nothing
-        }
-        //0 is empty =>add it
-        else if (multiplyCells === 0) {
-            if (!combo) {
-
-                legalMoves.push([[row + direction, col - 1], [row, col], [row, col]]);
-
-            }
-        }
-        //enemy => don't add, check next left
-        else {
-            //if i won't exit the boundary
-            if ((
-                (direction < 0 && row > 1) || (direction > 0 && row < 6))
-                && (col > 1)) {
-                multiplyCells = data.board[row + (2 * direction)][col - 2] * cellValue;
-                if (data.board[row + (2 * direction)][col - 2] === 0) {
-
-                    legalMoves.push([[row + (2 * direction), col - 2], [row, col]]);
-                }
-            }
-        }
-    }
-    return (legalMoves.length);
 }
