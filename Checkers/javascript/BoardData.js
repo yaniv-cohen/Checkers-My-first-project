@@ -11,7 +11,7 @@ class BoardData {
         [0, -1, 0, -1, 0, -1, 0, -1],
         [-1, 0, -1, 0, -1, 0, -1, 0],
         [0, -1, 0, -1, 0, -1, 0, -1],
-
+        ];
 
         //useful for testing:
         // [0, 0, 0, 0, 0, 0, 2, 0],
@@ -40,7 +40,7 @@ class BoardData {
         // [0, 0, 0, 0, 0, 1, 0, 0],
         // [0, 0, 0, 0, 0, 0, 0, 0],
         // [0, 0, 0, 0, 0, 0, 0, -2],
-        ];
+        
         this.currentPlayer = startingPlayer; //takes 'white' or 'black
         this.combo = false; //did I just eat a unit? used to know if a normal piece can eat backwards
         this.canEat = false; //hold true or false, used to know if one of the units of current player can eat
