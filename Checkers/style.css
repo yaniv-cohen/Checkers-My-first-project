@@ -2,9 +2,10 @@ body {
   display: flex;
   flex-direction: column;
   margin: auto;
-
+/* font-weight: 600; */
   background-color: rgb(49, 46, 43);
-  font-family: "Courier New", Courier, monospace;
+  /* font-family: "Courier New", Courier, monospace; */
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
   font-size: 18px;
 }
 header {
@@ -18,6 +19,8 @@ header {
 .checkers-h {
   color: white;
   text-align:center;
+  font-size: 40px;
+  letter-spacing: 8px;
 }
 #form-div{
     display: block;
@@ -56,7 +59,11 @@ bottom: 0;
 left: 0;
 padding: 4px;
 background-color: #779556;
+/* d61a1a */
 font-size: 16px;
+/* outline-color:black; */
+
+outline: 4px black solid;
 }
 table {
   /* width: 480px; */
@@ -124,6 +131,32 @@ td {
   -ms-animation: fadeIn 1s;
   animation-fill-mode: forwards;
 }
+label:hover{
+    cursor:pointer;
+}
+.myButton {
+	box-shadow:inset 0px 0px 7px 0px #000000;
+	background-color:#779556;
+	border-radius:10px;
+	/* border:1px solid #779556; */
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:20px;
+	/* font-style:italic; */
+	padding:9px 29px;
+	text-decoration:none;
+	text-shadow:4px 4px 1px black;
+}
+.myButton:hover {
+	background-color:#0061a7;
+    font-style:italic;
+}
+.myButton:active {
+	position:relative;
+	top:5px;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
