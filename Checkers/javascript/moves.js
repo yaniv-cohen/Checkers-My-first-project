@@ -23,7 +23,7 @@ function getAllMoves(row, col, paint = true) {
             getLegalOneMove(row, col);
         }
         
-        if(data.combo)
+        if(data.combo && !data.settings[0])
         {
             console.log('call getLegalQueenJumps piece at ' +row+ col);
             getLegalQueenJumps(row,col);
