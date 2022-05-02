@@ -53,15 +53,14 @@ class BoardData {
         while (document.getElementsByClassName('eater').length > 0) {
             document.getElementsByClassName('eater')[0].classList.remove('eater');
           }
-        rowLoop: 
         for (let i = 0; i < 8; i++) {
-            folLoop: 
             for (let k = 0; k < 8; k++) {
                 //for every unit, if it my unit
                 if ((data.currentPlayer === "white" && data.board[i][k] > 0) ||
                     (data.currentPlayer === "black" && data.board[i][k] < 0)) {
-                        //calculate all its legalMoves, which chages data.canEat to 'true' if there is a possible eat move
-                    getAllMoves(i, k, false);
+                        //calculate all its legalMoves, that changes data.canEat to 'true' if there is a possible eat move
+                    //if this unit can eat-jump an enemy unit color it.  the test is done without marking the options
+                        getAllMoves(i, k, false);
                     if (data.canEat && getAllMoves(i, k, false).length>0) {
                         document.getElementsByTagName('table')[0].rows[i].cells[k].classList.add('eater');
                     }
@@ -95,7 +94,7 @@ class BoardData {
         }
     }
 
-    //adds select class and stores the last selected cell cordinates.
+    //adds select class and stores the last selected cell coordinate.
     //TODO: merge select and deselect
     select(row, col, cell) {
         cell.classList.add('selected');

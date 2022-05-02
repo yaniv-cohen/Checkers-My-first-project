@@ -93,23 +93,31 @@ function getAllMoves(row, col, paint = true) {
             }
         }
     }
+    //mark the cells for the player to see
     if (paint) {
         addAvailableOption();
     }
+    //returns an array of possible moves. for example [[0,0],[0,3],[2,2]]
     return legalMoves;
+
+    //functions:
+    //get the cells the queen can jump to in order to eat
     function getLegalQueenFirstMoveJump(row, col) {
         //eat down right + +
         for (let i = 0; row + 1 + i < 7 && col + 1 + i < 7; i++) {
+            //if I hit a non-empty cell
             if (row < 6 && col < 6 && direction * data.board[row + 1 + i][col + 1 + i] < 0) {
+
                 if (data.board[row + 2 + i][col + 2 + i] === 0) {
                     legalMoves.push([row + 2 + i, col + 2 + i]);
                 }
+
                 break;
             }
         }
         //eat down left + -
         for (let i = 0; row + 1 + i < 7 && col - 1 - i > 0; i++) {
-
+            //if I hit a non-empty cell
             if (row < 6 && col > 1 && direction * data.board[row + 1 + i][col - 1 - i] < 0) {
                 if (data.board[row + 2 + i][col - 2 - i] === 0) {
                     legalMoves.push([row + 2 + i, col - 2 - i]);
@@ -120,7 +128,7 @@ function getAllMoves(row, col, paint = true) {
         }
         //eat up left - -
         for (let i = 0; row - 1 - i > 0 && col - 1 - i > 0; i++) {
-
+            //if I hit a non-empty cell
             if (row > 0 && col > 0 && direction * data.board[row - 1 - i][col - 1 - i] < 0) {
                 if (data.board[row - 2 - i][col - 2 - i] === 0) {
                     legalMoves.push([row - 2 - i, col - 2 - i]);
@@ -131,6 +139,7 @@ function getAllMoves(row, col, paint = true) {
         }
         //eat up right - -
         for (let i = 0; row - 1 - i > 0 && col + 1 + i < 7; i++) {
+            //if I hit a non-empty cell
             if (row > 0 && col < 7 && direction * data.board[row - 1 - i][col + 1 + i] < 0) {
                 if (data.board[row - 2 - i][col + 2 + i] === 0) {
                     legalMoves.push([row - 2 - i, col + 2 + i]);
@@ -143,6 +152,8 @@ function getAllMoves(row, col, paint = true) {
 
 
     }
+    //called if no piece can eat this turn and if not in a combo
+    //move any distance in any direction 
     function getLegalQueenFirstMoves() {
         //move down right + +
         for (let i = 0; row + 1 + i <= 7 && col + 1 + i <= 7; i++) {
@@ -195,7 +206,7 @@ function getAllMoves(row, col, paint = true) {
             }
         }
     }
-    //add the cell the queen can eat in order to get to
+    //add the all the cells the queen, or normal piece during a combo, can eat-jump to 1 cell distance
     function getLegalQueenJumps(row, col) {
         //eat down left + -
         if (row < 6 && col > 1 && direction * data.board[row + 1][col - 1] < 0) {
@@ -300,11 +311,12 @@ function getAllMoves(row, col, paint = true) {
 
     //show movement and eating options on the board
     function addAvailableOption() {
+        //loop through the array 'legalMoves'    [[row2,col1],[row2,col2],[row3.col3]]
+        //each cells contains legal coordinates [row,col]
         for (let i = 0; i < legalMoves.length; i++) {
-            console.log("legalMoves: " + legalMoves);
             let targetElement = document.getElementsByTagName('table')[0].rows[legalMoves[i][0]].cells[legalMoves[i][1]];
             let targetDataCell = data.board[legalMoves[i][0]][legalMoves[i][1]];
-            //make sure the target is empty --SAFTY--
+            //make sure the target is empty --for SAFTY, not necessary--
             if (targetDataCell === 0) {
                 targetElement.classList.add('option');
             }

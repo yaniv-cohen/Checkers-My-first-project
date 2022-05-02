@@ -133,7 +133,7 @@ function cellClick(row, col, goOn) {
     //defines the action after a unit eats another
     //remove eatten piece, click on the new cell location and set start/continue a combo
     function onEat() {
-      //calculate the cordinates of the eatten piece
+      //calculate the coordinate of the eatten piece
       //needed for queen jumps
       let targetRow = selected[0] > row ? row + 1 : row - 1;
       let targetCol = selected[1] > col ? col + 1 : col - 1;
@@ -145,24 +145,23 @@ function cellClick(row, col, goOn) {
       //update selected to the new cell
       data.deselct();
       data.deleteOptions();
-      data.select(
-        row,
-        col,
-        document.getElementById("game").rows[row].cells[col]
-      );
-      //I ate do a combo
+      data.select(row,col,cell);
+      //I ate, so do a combo
       data.combo = true;
     }
 
     //called after no more combo-eats or after a move with no eating
-    //changes the player currently playing
+    //changes the player currently playing, updates the indicator
+    //calculates which units of the current player can eat and gives colors them
     function changePlayer() {
       if (data.currentPlayer == "white") {
+        //change the player
         data.currentPlayer = "black";
-        //update the div
+        //update the indicator
         document.getElementById('turn-h').innerText = "Black's turn";
         document.getElementById('turn-h').className = 'black-turn';
         data.canIEat();
+        //if the player can make a eat move - add swords to the turn indicator
         if (data.canEat) {
           console.log('cross');
           document.getElementById('turn-h').classList.add('white-crossed-swords');
@@ -170,25 +169,23 @@ function cellClick(row, col, goOn) {
 
       } else {
         data.currentPlayer = "white";
-        //update the div
+        //update the indicator
         document.getElementById('turn-h').innerText = "White's turn";
         document.getElementById('turn-h').className = 'white-turn';
-
-
-
+        //if the player can make a eat move - add swords to the turn indicator
         data.canIEat();
         if (data.canEat) {
           console.log('cross');
           document.getElementById('turn-h').classList.add('black-crossed-swords');
         }
       }
-
     }
 
     //return true if the player has a move he can make
     function canMakeMove(player) {
       console.log("called canMakeMove " + player);
       if (player == "black") {
+        //loop throught all cells
         for (let i = 0; i < data.board.length; i++) {
           for (let k = 0; k < data.board[i].length; k++) {
             //if the cell is black
@@ -199,10 +196,11 @@ function cellClick(row, col, goOn) {
           }
         }
       } else if (player == "white") {
+        //loop throught all cells
         for (let i = 0; i < data.board.length; i++) {
           for (let k = 0; k < data.board[i].length; k++) {
             //if the cell is white
-            //if i have a possible move
+            //if this unit has a possible move
             if (data.board[i][k] > 0 && getAllMoves(i, k, false).length > 0) {
               return true;
             }
