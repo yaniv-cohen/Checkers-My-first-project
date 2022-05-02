@@ -39,7 +39,7 @@ function paintBoard() {
                     tdElement.classList.add('black-queen');
 
                 }
-                tdElement.addEventListener('click', function () { cellClick(row, col,data) })
+                tdElement.addEventListener('click', function () { cellClick(row, col, !data.endGame) })
             }
             else {
                 tdElement.className = 'light-cell';

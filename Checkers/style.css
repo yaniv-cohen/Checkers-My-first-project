@@ -1,39 +1,90 @@
-td{
-    height: 50px;
-    width:50px;
-    background-color: red;
+body {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+
+  background-color: rgb(49, 46, 43);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 18px;
 }
-.dark-cell{
-background-color: slategrey;
+header {
+  text-align: center;
+  margin: 20px auto;
+  padding: 20px;
+
+  color: #c4d7d4;
+  background-color: rgb(33, 31, 29);
+}
+h1 {
+  color: white;
+}
+#gameBoard {
+  display: flex;
+  flex-direction: column;
+  margin: 120px auto;
+  width: 550px;
+
+  background-color: black;
+  background-image: url("https://img.freepik.com/free-photo/old-wooden-texture-background-vintage_55716-1138.jpg?w=360");
+  background-size: 100%;
+
+  background-position: center;
 }
 
-.light-cell{
-    background-color: beige;
-
-}
-.white-piece{
-    background-image: url('images/circle-white.svg');
+table {
+  /* width: 480px; */
+  padding: 20px;
+  border-spacing: 6px;
 }
 
-.black-piece{
-    background-image: url('images/circle-black.svg');
+td {
+  height: 60px;
+  width: 60px;
+  background-color: red;
+  margin: 0px;
+  padding: 0;
+  border: 0px;
+  outline: 0;
+}
+.dark-cell {
+  background-color: #779556;
 }
 
-.black-queen{
-    background-image: url('images/black-queen.png');
-    background-size: 50px;
-    background-repeat: no-repeat;
-    background-position: center;
+.light-cell {
+  background-color: #ebecd0;
 }
-.white-queen{
-    background-image: url('images/white-queen.png');
-    background-size: 50px;
-    background-repeat: no-repeat;
-    background-position: center;
+.white-piece {
+  background-image: url("images/circle-white.svg");
+  /* background-size: 60px; */
+  background-repeat: no-repeat;
+  background-position: center;
 }
-.selected{
-    background-color: aquamarine;
+
+.black-piece {
+  background-image: url("images/circle-black.svg");
+  /* background-size: 60px; */
+  background-repeat: no-repeat;
+  background-position: center;
 }
-.option{
-    background-color: greenyellow;
+
+.black-queen {
+  background-image: url("images/black-queen.png");
+  background-size: 60px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.white-queen {
+  background-image: url("images/white-queen.png");
+  background-size: 60px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.selected {
+  background-color: #baca2b;
+}
+.option {
+  background-image: url("images/option.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
 }

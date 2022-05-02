@@ -11,9 +11,11 @@ function getAllMoves(row, col, paint = true) {
     //white normal piece
     if (Math.abs(data.board[row][col]) == 1) {
         getLegalJumps(row, col);
+
         if(legalMoves.length>0)
         {
             data.canEat=true;
+            // console.log("data.canEat: " + data.canEat);
         }
         else if (legalMoves.length == 0 && !data.combo && !data.canEat) {
             getLegalOneMove(row, col);
@@ -39,7 +41,6 @@ function getAllMoves(row, col, paint = true) {
             //if i can not eat myself, and neither can any of my other units
             if (legalMoves.length == 0 && !data.canEat) {
                 getLegalQueenFirstMoves(row, col);
-                //TODO: end player turn
             }
 
         }
@@ -48,6 +49,7 @@ function getAllMoves(row, col, paint = true) {
     if (paint) {
         addAvailableOption();
     }
+    return legalMoves;
     function getLegalQueenFirstMoveJump(row, col) {
         //eat down right + +
         for (let i = 0; row + 1 + i < 7 && col + 1 + i < 7; i++) {
@@ -98,11 +100,9 @@ function getAllMoves(row, col, paint = true) {
 
     }
     function getLegalQueenFirstMoves() {
-
-        //if white
         //move down right + +
         for (let i = 0; row + 1 + i <= 7 && col + 1 + i <= 7; i++) {
-            if (row < 6 && col < 6) {
+            if (row < 7 && col < 7) {
                 if (data.board[row + 1 + i][col + 1 + i] === 0) {
                     legalMoves.push([row + 1 + i, col + 1 + i]);
                 }
@@ -113,10 +113,10 @@ function getAllMoves(row, col, paint = true) {
             }
         }
 
-        //move down left - -
+        //move down left + -
         for (let i = 0; row + 1 + i <= 7 && col - 1 - i >= 0; i++) {
-            
-            if (row < 6 && col > 1) {
+            if (row <= 7 && col >=0) {
+
                 if (data.board[row + 1 + i][col - 1 - i] === 0) {
                     legalMoves.push([row + 1 + i, col - 1 - i]);
                 }
@@ -124,7 +124,6 @@ function getAllMoves(row, col, paint = true) {
 
                     break;
                 }
-
             }
 
         }
@@ -132,22 +131,19 @@ function getAllMoves(row, col, paint = true) {
         //move up left - +
         for (let i = 0; row - 1 - i >= 0 && col - 1 - i >= 0; i++) {
             
-            if (row > 1 && col > 1) {
+            if (row > 0 && col > 0) {
                 if (data.board[row - 1 - i][col - 1 - i] === 0) {
                     legalMoves.push([row - 1 - i, col - 1 - i]);
                 }
                 else {
-
                     break;
                 }
-
             }
 
         }
-        //move up right + -
+        //move up right - +
         for (let i = 0; row - 1 - i >= 0 && col + 1 + i <= 7; i++) {
-            
-            if (row < 6 && col < 6) {
+            if (row > 0 && col < 7) {
                 if (data.board[row - 1 - i][col + 1 + i] === 0) {
                     legalMoves.push([row - 1 - i, col + 1 + i]);
                 }
@@ -172,7 +168,8 @@ function getAllMoves(row, col, paint = true) {
         }
         //eat down right + +
         if (row < 6 && col < 6 && direction * data.board[row + 1][col + 1] < 0) {
-            if (data.board[row + 2 * direction][col + 2] === 0) {
+            if (data.board[row + 2][col + 2] === 0) {
+                console.log("eat down right: " );
                 legalMoves.push([row + 2, col + 2]);
             }
         }
@@ -209,22 +206,7 @@ function getAllMoves(row, col, paint = true) {
                     legalMoves.push([row + 2, col + 2]);
                 }
             }
-            // // combo => look up left
-            // if (data.combo && row > 1 && col > 1) {
-            //     if (direction * data.board[row - 1][col - 1] < 0 && data.board[row - 2][col - 2] === 0) {
-            //         legalMoves.push([row - 2, col - 2]);
-            //     }
 
-
-            // }
-            // // combo => look up right
-            // if (data.combo && row > 1 && col < 6) {
-            //     if (direction * data.board[row - 1][col + 1] < 0 && data.board[row - 2][col + 2] === 0) {
-            //         legalMoves.push([row - 2, col - 2]);
-            //     }
-
-
-            // }
         }
         else if (direction < 0) {
             // combo => look up left
@@ -239,18 +221,7 @@ function getAllMoves(row, col, paint = true) {
                     legalMoves.push([row - 2, col + 2]);
                 }
             }
-            // if (data.combo && (row < 6 && col > 1 && direction * data.board[row + 1][col - 1] < 0)) {
-            //     if (data.board[row + 2][col - 2] === 0) {
-            //         legalMoves.push([row + 2, col - 2]);
-            //     }
 
-            // }
-            // //eat down right
-            // if (data.combo && (row < 6 && col < 6 && direction * data.board[row + 1][col + 1] < 0)) {
-            //     if (data.board[row + 2 * direction][col + 2] === 0) {
-            //         legalMoves.push([row + 2, col + 2]);
-            //     }
-            // }
 
 
         }
