@@ -22,6 +22,7 @@ header {
   color: white;
   font-weight: 100;
   text-align: center;
+  
   font-size: 40px;
   letter-spacing: 8px;
 }
@@ -82,7 +83,7 @@ table {
 #turn-h {
   display: block;
   margin: 0 auto;
-  font-weight: 50;
+  font-weight: 20;
   width: 150px;
   text-align: center;
   padding: 10px 20px;
@@ -92,13 +93,13 @@ transition:0.5s;
 .white-turn {
   background-color: white ;
   color: #000000;
-  box-shadow: 2px 4px 4px 0px #000000;
+  box-shadow: 3px 6px 4px 0px #222222;
 }
 
 .black-turn {
   background-color: black;
   color: white;
-  box-shadow: 2px 4px 4px 0px #ffffff;
+  box-shadow: 3px 6px 4px 0px #222222;
 }
 .black-crossed-swords{
   background-image: url('images/black-crossed-swords.svg') !important;
@@ -160,7 +161,7 @@ td {
 }
 
 .selected {
-  background-color: #baca2b;
+  background-color: #baca2b !important;
 }
 
 .option {
@@ -182,7 +183,11 @@ td {
 label:hover {
   cursor: pointer;
 }
+.eater
+{
+  background-color: #740000;
 
+}
 .myButton {
   box-shadow: inset 0px 0px 7px 0px #000000;
   background-color: #779556;
@@ -195,17 +200,19 @@ label:hover {
   /* font-style:italic; */
   padding: 9px 29px;
   text-decoration: none;
-  text-shadow: 4px 4px 1px black;
+  text-shadow: 2px 3px 1px black;
 }
 
 .myButton:hover {
-  background-color: #0061a7;
-  font-style: italic;
+  background-color: #e1823a;
+  position: relative;
+  top: 1px;
+  /* font-style: italic; */
 }
 
 .myButton:active {
   position: relative;
-  top: 5px;
+  top: 6px;
 }
 
 @keyframes fadeIn {

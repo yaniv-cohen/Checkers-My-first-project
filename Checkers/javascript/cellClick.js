@@ -120,8 +120,11 @@ function cellClick(row, col, goOn) {
       }
       //if the clicked cell is not a valid move - change nothing other than selected cell and the options displayed
       else {
-        data.deselct(row, col, cell);
-        data.deleteOptions();
+        //can't deselct during a combo
+        if (!data.combo) {
+          data.deselct(row, col, cell);
+          data.deleteOptions();
+        }
       }
     }
 
@@ -170,6 +173,9 @@ function cellClick(row, col, goOn) {
         //update the div
         document.getElementById('turn-h').innerText = "White's turn";
         document.getElementById('turn-h').className = 'white-turn';
+
+
+
         data.canIEat();
         if (data.canEat) {
           console.log('cross');

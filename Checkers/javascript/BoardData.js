@@ -3,23 +3,23 @@ class BoardData {
         //board keeps track of the units: 1 is white normal, 2 is white queen, -1 black normal, -2 black queen
         //A 4X4 would suffice, but 8X8 is simpler
         this.board = [
-        // [1, 0, 1, 0, 1, 0, 1, 0],
-        // [0, 1, 0, 1, 0, 1, 0, 1],
-        // [1, 0, 1, 0, 1, 0, 1, 0],
-        // [0, 0, 0, 0, 0, 0, 0, 0],
-        // [0, 0, 0, 0, 0, 0, 0, 0],
-        // [0, -1, 0, -1, 0, -1, 0, -1],
-        // [-1, 0, -1, 0, -1, 0, -1, 0],
-        // [0, -1, 0, -1, 0, -1, 0, -1],
+        [1, 0, 1, 0, 1, 0, 1, 0],
+        [0, 1, 0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, -1, 0, -1, 0, -1, 0, -1],
+        [-1, 0, -1, 0, -1, 0, -1, 0],
+        [0, -1, 0, -1, 0, -1, 0, -1],
 
-        [0, 0, 0, 0, 0, 0, 2, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, -2],
+        // [0, 0, 0, 0, 0, 0, 2, 0],
+        // [0, 0, 0, 0, 0, 0, 0, 0],
+        // [0, 0, 0, 0, 0, 0, 0, 0],
+        // [0, 0, 0, 0, 0, 0, 0, 0],
+        // [0, 0, 0, 0, 0, 0, 0, 0],
+        // [0, 0, 0, 0, 0, 0, 0, 0],
+        // [0, 0, 0, 0, 0, 0, 0, 0],
+        // [0, 0, 0, 0, 0, 0, 0, -2],
 
         // [0, 0, 0, 0, 0, 0, 2, 0],
         // [0, 1, 0, 1, 0, 0, 0, 0],
@@ -50,6 +50,9 @@ class BoardData {
     canIEat() {
         //reset from last turn
         data.canEat = false;
+        while (document.getElementsByClassName('eater').length > 0) {
+            document.getElementsByClassName('eater')[0].classList.remove('eater');
+          }
         rowLoop: 
         for (let i = 0; i < 8; i++) {
             folLoop: 
@@ -59,11 +62,8 @@ class BoardData {
                     (data.currentPlayer === "black" && data.board[i][k] < 0)) {
                         //calculate all its legalMoves, which chages data.canEat to 'true' if there is a possible eat move
                     getAllMoves(i, k, false);
-                    if (data.canEat) {
-                        //no need to check every unit (1 or more is irrelevant) 
-                        // so stop on the first and exit the outer the loop
-                        break rowLoop;
-                        //TODO: Add eater class that marks all the units that can eat this turn
+                    if (data.canEat && getAllMoves(i, k, false).length>0) {
+                        document.getElementsByTagName('table')[0].rows[i].cells[k].classList.add('eater');
                     }
                 }
             }
