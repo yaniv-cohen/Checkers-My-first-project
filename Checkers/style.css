@@ -54,7 +54,7 @@ header {
 }
 
 footer{
-position: absolute;
+position: fixed;
 bottom: 0;
 left: 0;
 padding: 4px;
@@ -68,7 +68,7 @@ outline: 4px black solid;
 table {
   /* width: 480px; */
   padding: 20px;
-  border-spacing: 6px;
+  border-spacing: 0px;
 }
 
 td {
@@ -81,10 +81,12 @@ td {
 }
 .dark-cell {
   background-color: #779556;
+  
 }
 
 .light-cell {
   background-color: #ebecd0;
+  
 }
 .white-piece {
   background-image: url("images/circle-white.svg");
