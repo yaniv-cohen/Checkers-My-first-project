@@ -14,7 +14,7 @@
       <p>Pieces can move 1 step diagonally to an empty cell.</p>
       <p>Pieces can jump diagonally over an enemy if the next cell is empty.</p>
       <p>
-        After jumping over an enemy piece, the enemy piece is removed and the
+        After jumping over an enemy piece, the enemy piece is removed and the <br>
         piece can hop over another enemy piece.
       </p>
       <div id="form-div">
@@ -28,7 +28,7 @@
           <input type="checkbox" id= "queenOnlyOneMove" name="queenOnlyOneMove" /> <label for="queenOnlyOneMove">Queen can move only one cell in each direction</label>
         </p>
         <br>
-        <a href="#" class="myButton" onclick="initializeGame()">Click Here To Play</a>
+        <a class="myButton" onclick="initializeGame()">Click Here To Play</a>
 
       </div>
     </header>
@@ -36,24 +36,37 @@
     <div class="win-div" id="white-win-div">
       <h1>White Won !</h1>
       <p id="white-win-condition-text"></p>
-      <p>Play again ?</p>
-      <p><input type="checkbox" name="comboCanGoBack" />combo Can Go Back</p>
+      <div>
+        <h2><uPlay again ?</u></h2>
       <p>
-        <input type="checkbox" name="comboCanGoBack" />Queen can hop any
-        distance
+        
+          <input type="checkbox" id="comboCantGoBack1" name="comboCantGoBack" />
+          <label for="comboCantGoBack1"> Normal pieces can't go back, not even in multi-jumps</label>
       </p>
-      <button onclick="initializeGame()">Click Here To Play</button>
+      <p>
+        <input type="checkbox" id= "queenOnlyOneMove1" name="queenOnlyOneMove" /> <label for="queenOnlyOneMove1">Queen can move only one cell in each direction</label>
+      </p>
+      <br>
+      <a class="myButton" onclick="initializeGame()">Click Here To Play</a>
+
+    </div>
     </div>
     <div class="win-div" id="black-win-div">
       <h1>Black Won !</h1>
       <p id="black-win-condition-text"></p>
-      <p>Play again ?</p>
-      <p><input type="checkbox" name="comboCanGoBack" />combo Can Go Back</p>
+      <div>
+        <h2><u>Play again ?</u></h2>
       <p>
-        <input type="checkbox" name="comboCanGoBack" />Queen can hop any
-        distance
+        
+          <input type="checkbox" id="comboCantGoBack2" name="comboCantGoBack" />
+          <label for="comboCantGoBack"> Normal pieces can't go back, not even in multi-jumps</label>
       </p>
-      <button onclick="initializeGame()">Click Here To Play</button>
+      <p>
+        <input type="checkbox" id= "queenOnlyOneMove2" name="queenOnlyOneMove" /> <label for="queenOnlyOneMove2">Queen can move only one cell in each direction</label>
+      </p>
+      <br>
+      <a class="myButton" onclick="initializeGame()">Click Here To Play</a>
+      </div>
     </div>
     <footer>Yaniv's Checkers Game for Cyber4</footer>
     <script src="javascript/winner.js"></script>
