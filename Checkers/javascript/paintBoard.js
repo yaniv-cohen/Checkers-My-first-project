@@ -10,7 +10,7 @@ function paintBoard() {
     let table = document.createElement('table');
     table.setAttribute('id','game'); //redundant
     let gameBoardElement = document.getElementById('gameBoard');
-    gameBoardElement.innerHTML='';
+    gameBoardElement.innerHTML='<h1 class ="checkers-h">Checkers</h1>';
     gameBoardElement.appendChild(table);
 
     for (let row = 0; row < height; row++) {
