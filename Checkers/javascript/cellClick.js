@@ -31,7 +31,7 @@ function cellClick(row, col, goOn) {
         (data.currentPlayer === "white" && data.board[row][col] > 0) ||
         (data.currentPlayer === "black" && data.board[row][col] < 0)
       ) {
-        data.deselct();
+        data.deseleect();
         data.deleteOptions();
         data.select(row, col, cell);
 
@@ -93,7 +93,7 @@ function cellClick(row, col, goOn) {
             else {
               changePlayer();
               data.combo = false;
-              data.deselct();
+              data.deselect();
               // cellClick(0, 1, data); REDUNDANT
             }
             //check if I ate the last piece of the opponent
@@ -104,7 +104,7 @@ function cellClick(row, col, goOn) {
 
           //if I moved and didn't eat => end my turn
           else {
-            data.deselct(row, col, cell);
+            data.deselect(row, col, cell);
             data.deleteOptions();
             data.combo = false;
             changePlayer();
@@ -120,9 +120,9 @@ function cellClick(row, col, goOn) {
       }
       //if the clicked cell is not a valid move - change nothing other than selected cell and the options displayed
       else {
-        //can't deselct during a combo
+        //can't deselect during a combo
         if (!data.combo) {
-          data.deselct(row, col, cell);
+          data.deselect(row, col, cell);
           data.deleteOptions();
         }
       }
@@ -143,7 +143,7 @@ function cellClick(row, col, goOn) {
       ].className = "dark-cell";
       // reset turn and click on the new cell
       //update selected to the new cell
-      data.deselct();
+      data.deselect();
       data.deleteOptions();
       data.select(row,col,cell);
       //I ate, so do a combo

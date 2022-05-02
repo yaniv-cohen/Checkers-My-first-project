@@ -12,6 +12,8 @@ class BoardData {
         [-1, 0, -1, 0, -1, 0, -1, 0],
         [0, -1, 0, -1, 0, -1, 0, -1],
 
+
+        //useful for testing:
         // [0, 0, 0, 0, 0, 0, 2, 0],
         // [0, 0, 0, 0, 0, 0, 0, 0],
         // [0, 0, 0, 0, 0, 0, 0, 0],
@@ -72,20 +74,20 @@ class BoardData {
 //called after every eat. if a player lost all his units - ends the game
 //TODO: add score for each player based on the number of units on the board
     countPieces() {
-        this.black_unit_count = 0;
-        this.white_unit_count = 0;
-        // console.log('count');
+        this.black_unit_count = 0; //number of black units
+        this.white_unit_count = 0; //number of white units
+        //loop over the whole data.board
         for (let i = 0; i < this.board.length; i++) {
             for (let k = 0; k < this.board.length; k++) {
                 if (this.board[i][k] > 0) {
-                    this.white_unit_count++;
+                    this.white_unit_count++; 
                 }
                 else if (this.board[i][k] < 0) {
                     this.black_unit_count++;
                 }
             }
         }
-
+        //check if any player has no units
         if (this.black_unit_count <= 0) {
             winner('white');
         }
@@ -95,12 +97,12 @@ class BoardData {
     }
 
     //adds select class and stores the last selected cell coordinate.
-    //TODO: merge select and deselect
     select(row, col, cell) {
         cell.classList.add('selected');
         selected = [row, col];
     }
-    deselct() {
+    //remove the class 'selected' from everything and empty the array selected from last cell it held
+    deseleect() {
         selected = [];
         if (document.getElementsByClassName('selected').length > 0) {
 
