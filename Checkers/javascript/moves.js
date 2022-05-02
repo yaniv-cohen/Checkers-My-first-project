@@ -169,7 +169,6 @@ function getAllMoves(row, col, paint = true) {
                     break;
                 }
             }
-
         }
 
         //move up left - +
@@ -183,7 +182,6 @@ function getAllMoves(row, col, paint = true) {
                     break;
                 }
             }
-
         }
         //move up right - +
         for (let i = 0; row - 1 - i >= 0 && col + 1 + i <= 7; i++) {
@@ -192,12 +190,9 @@ function getAllMoves(row, col, paint = true) {
                     legalMoves.push([row - 1 - i, col + 1 + i]);
                 }
                 else {
-
                     break;
                 }
-
             }
-
         }
     }
     //add the cell the queen can eat in order to get to
