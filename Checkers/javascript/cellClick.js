@@ -35,17 +35,6 @@ function cellClick(row, col, goOn) {
         data.deleteOptions();
         data.select(row, col, cell);
 
-        // data.canEat = false;
-        // for (let i = 0; i < 8; i++) {
-        //     for (let k = 0; k < 8; k++) {
-        //         if ((data.currentPlayer === "white" && data.board[i][k] > 0) ||
-        //             (data.currentPlayer === "black" && data.board[i][k] < 0)) {
-        //             data.canIEat();
-        //             getAllMoves(row, col, false);
-        //         }
-        //     }
-        // }
-
         //can any of my units eat?
         data.canIEat();
         //mark optional moves
@@ -54,7 +43,7 @@ function cellClick(row, col, goOn) {
 
       //if i clicked on an empty cell
       else if (data.board[row][col] === 0) {
-          
+
         //recalculate the options <-MIGHT BE REDUNDANT--
         //can any of my units eat?
         data.canIEat();
@@ -167,9 +156,27 @@ function cellClick(row, col, goOn) {
     function changePlayer() {
       if (data.currentPlayer == "white") {
         data.currentPlayer = "black";
+        //update the div
+        document.getElementById('turn-h').innerText = "Black's turn";
+        document.getElementById('turn-h').className = 'black-turn';
+        data.canIEat();
+        if (data.canEat) {
+          console.log('cross');
+          document.getElementById('turn-h').classList.add('white-crossed-swords');
+        }
+
       } else {
         data.currentPlayer = "white";
+        //update the div
+        document.getElementById('turn-h').innerText = "White's turn";
+        document.getElementById('turn-h').className = 'white-turn';
+        data.canIEat();
+        if (data.canEat) {
+          console.log('cross');
+          document.getElementById('turn-h').classList.add('black-crossed-swords');
+        }
       }
+
     }
 
     //return true if the player has a move he can make

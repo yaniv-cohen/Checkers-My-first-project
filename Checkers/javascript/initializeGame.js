@@ -9,7 +9,7 @@ document.getElementsByClassName('win-div')[1].style.display='none';
 //show gameBoard
 document.getElementById('gameBoard').style.display='flex';
 //data will hold the board state and settings
-data=new BoardData('white');
+data=new BoardData('black');
 //get settings from the checkboxes
 data.settings =[document.getElementsByName('comboCantGoBack')[0].checked,
 document.getElementsByName('queenOnlyOneMove')[0].checked];
