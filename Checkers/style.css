@@ -186,7 +186,7 @@ label:hover {
 .eater
 {
   background-color: #740000;
-
+  transition: 0.25s;
 }
 .myButton {
   box-shadow: inset 0px 0px 7px 0px #000000;
