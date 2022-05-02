@@ -75,8 +75,6 @@ function cellClick(row, col, goOn) {
             data.board[row][col] = 2;
             cell.className = "dark-cell white-queen";
           }
-
-          //
           //if the move was eating another unit
           //move the piece, and check if you can eat another
           //(data.canEat is still the same a it were before the movement)
@@ -94,10 +92,9 @@ function cellClick(row, col, goOn) {
               changePlayer();
               data.combo = false;
               data.deselect();
-              // cellClick(0, 1, data); REDUNDANT
             }
             //check if I ate the last piece of the opponent
-            //this checks both player which is REDUNDANT
+            //this checks both player which is --REDUNDANT--
             //TODO: only check the eaten piece's player
             data.countPieces();
           }
