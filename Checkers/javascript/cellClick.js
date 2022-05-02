@@ -31,7 +31,7 @@ function cellClick(row, col, goOn) {
         (data.currentPlayer === "white" && data.board[row][col] > 0) ||
         (data.currentPlayer === "black" && data.board[row][col] < 0)
       ) {
-        data.deseleect();
+        data.deselect();
         data.deleteOptions();
         data.select(row, col, cell);
 

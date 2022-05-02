@@ -102,7 +102,7 @@ class BoardData {
         selected = [row, col];
     }
     //remove the class 'selected' from everything and empty the array selected from last cell it held
-    deseleect() {
+    deselect() {
         selected = [];
         if (document.getElementsByClassName('selected').length > 0) {
 
