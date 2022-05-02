@@ -51,7 +51,7 @@ function cellClick(row, col, goOn) {
                     if ((data.currentPlayer === "white" && data.board[i][k] > 0) ||
                         (data.currentPlayer === "black" && data.board[i][k] < 0))
                         {data.canIEat();
-                    console.log(getAllMoves(row, col, false));
+                    // console.log(getAllMoves(row, col, false));
                         }
                 }
             }
@@ -111,22 +111,13 @@ function cellClick(row, col, goOn) {
                     data.combo = false;
                     changePlayer();
                     data.combo=false;
-
-
-
-
-                    if (this.black_unit_count <= 0) {
-                        winner('white');
-                    }
-                    else if (this.white_unit_count <= 0) {
-                        winner('black');
-                    }
                 }
                 //can the current player make a move?
                 //if he can't than the 
+                
                 if (!canMakeMove(data.currentPlayer)) {
                     changePlayer();
-                    winner(data.currentPlayer, 'no-moves');
+                    winner(data.currentPlayer, 'no moves');
                 }
 
             }

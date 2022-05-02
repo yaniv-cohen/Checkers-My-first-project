@@ -1,27 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
+  <body>
     <header>
-        <h1>Checkers</h1>
-        <p>Pieces can move 1 step diagonally to an empty cell.</p>
-        <p>Pieces can jump diagonally over an enemy if the next cell is empy.</p>
-        <p>after jumping over an enemy piece, the enemy piece is removed and the piece can hop over another enemy piece.
+      <h1>Checkers</h1>
+      <p>Pieces can move 1 step diagonally to an empty cell.</p>
+      <p>Pieces can jump diagonally over an enemy if the next cell is empty.</p>
+      <p>
+        After jumping over an enemy piece, the enemy piece is removed and the
+        piece can hop over another enemy piece.
+      </p>
+      <div id="form-div">
+          <h2>Optional Rules:</h2>
+        <p>
+            <input type="checkbox" id="comboCantGoBack" name="comboCantGoBack" />
+            <label for="comboCantGoBack"> Normal pieces can't go back, not even in multi-jumps</label>
         </p>
-        <p><input type="checkbox" name="comboCanGoBack">combo Can Go Back</p>
-        <p><input type="checkbox" name="comboCanGoBack">Queen can hop any distance</p>
+        <p>
+          <input type="checkbox" id= "queenOnlyOneMove" name="queenOnlyOneMove" /> <label for="queenOnlyOneMove">Queen can move only 1 cell in each direction</label>
+        </p>
+        <br>
         <button onclick="initializeGame()">Click Here To Play</button>
-        <link rel="stylesheet" href="style.css">
+      </div>
     </header>
-    <div id="gameBoard">
-
+    <div id="gameBoard"></div>
+    <div class="win-div" id="white-win-div">
+      <h1>White Won !</h1>
+      <p id="white-win-condition-text"></p>
+      <p>Play again ?</p>
+      <p><input type="checkbox" name="comboCanGoBack" />combo Can Go Back</p>
+      <p>
+        <input type="checkbox" name="comboCanGoBack" />Queen can hop any
+        distance
+      </p>
+      <button onclick="initializeGame()">Click Here To Play</button>
+    </div>
+    <div class="win-div" id="black-win-div">
+      <h1>Black Won !</h1>
+      <p id="black-win-condition-text"></p>
+      <p>Play again ?</p>
+      <p><input type="checkbox" name="comboCanGoBack" />combo Can Go Back</p>
+      <p>
+        <input type="checkbox" name="comboCanGoBack" />Queen can hop any
+        distance
+      </p>
+      <button onclick="initializeGame()">Click Here To Play</button>
     </div>
     <footer></footer>
     <script src="javascript/movePool.js"></script>
@@ -31,6 +61,5 @@
     <script src="javascript/paintBoard.js"></script>
     <script src="javascript/cellClick.js"></script>
     <script src="javascript/initializeGame.js"></script>
-</body>
-
+  </body>
 </html>

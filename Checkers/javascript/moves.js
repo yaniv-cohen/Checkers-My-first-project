@@ -10,6 +10,7 @@ function getAllMoves(row, col, paint = true) {
     }
     //white normal piece
     if (Math.abs(data.board[row][col]) == 1) {
+        
         getLegalJumps(row, col);
 
         if(legalMoves.length>0)
@@ -18,17 +19,28 @@ function getAllMoves(row, col, paint = true) {
             // console.log("data.canEat: " + data.canEat);
         }
         else if (legalMoves.length == 0 && !data.combo && !data.canEat) {
+            
             getLegalOneMove(row, col);
         }
         
         if(data.combo)
         {
+            console.log('call getLegalQueenJumps piece at ' +row+ col);
             getLegalQueenJumps(row,col);
+            if(legalMoves.length>0)
+        {
+            data.canEat=true;
+            // console.log("data.canEat: " + data.canEat);
+        }
         }
         
     }
     //queen
     else if (Math.abs(data.board[row][col]) == 2) {
+
+
+        if(!data.settings[1])
+        {
         getLegalQueenJumps(row, col);
         if (legalMoves.length > 0) {
             data.canEat = true;
@@ -44,7 +56,45 @@ function getAllMoves(row, col, paint = true) {
             }
 
         }
+    }
+    else
+    {
+        getLegalQueenJumps(row, col);
+        if (legalMoves.length > 0) {
+            data.canEat = true;
+        }
+        if (legalMoves.length == 0 && !data.canEat) {
+            //down right
+            if (row < 7 && col < 7) {
+                if (data.board[row + 1  ][col + 1  ] === 0) {
+                    legalMoves.push([row + 1  , col + 1  ]);
+                }
+            }
+            //down left
+            if (row < 7 && col >=0) {
 
+                if (data.board[row + 1 ][col - 1] === 0) {
+                    legalMoves.push([row + 1  , col - 1  ]);
+                }
+            }
+
+            //up left
+            if (row > 0 && col > 0) {
+                if (data.board[row - 1  ][col - 1  ] === 0) {
+                    legalMoves.push([row - 1  , col - 1  ]);
+                }
+            }
+
+            //up right
+            if (row > 0 && col < 7) {
+                if (data.board[row - 1 ][col + 1 ] === 0) {
+                    legalMoves.push([row - 1 , col + 1 ]);
+                }
+
+
+            }
+        }
+    }
     }
     if (paint) {
         addAvailableOption();
@@ -208,14 +258,15 @@ function getAllMoves(row, col, paint = true) {
             }
 
         }
+        //if black
         else if (direction < 0) {
-            // combo => look up left
+            //look up left
             if (row > 1 && col > 1) {
                 if (direction * data.board[row - 1][col - 1] < 0 && data.board[row - 2][col - 2] === 0) {
                     legalMoves.push([row - 2, col - 2]);
                 }
             }
-            // combo => look up right
+            //look up right
             if (row > 1 && col < 6) {
                 if (direction * data.board[row - 1][col + 1] < 0 && data.board[row - 2][col + 2] === 0) {
                     legalMoves.push([row - 2, col + 2]);
