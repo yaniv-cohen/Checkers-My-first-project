@@ -43,7 +43,6 @@ function cellClick(row, col, goOn) {
 
       //if i clicked on an empty cell
       else if (data.board[row][col] === 0) {
-
         //recalculate the options <-MIGHT BE REDUNDANT--
         //can any of my units eat?
         data.canIEat();
@@ -142,7 +141,7 @@ function cellClick(row, col, goOn) {
       //update selected to the new cell
       data.deselect();
       data.deleteOptions();
-      data.select(row,col,cell);
+      data.select(row, col, cell);
       //I ate, so do a combo
       data.combo = true;
     }
@@ -151,29 +150,33 @@ function cellClick(row, col, goOn) {
     //changes the player currently playing, updates the indicator
     //calculates which units of the current player can eat and gives colors them
     function changePlayer() {
+      data.combo = false;
       if (data.currentPlayer == "white") {
         //change the player
         data.currentPlayer = "black";
         //update the indicator
-        document.getElementById('turn-h').innerText = "Black's turn";
-        document.getElementById('turn-h').className = 'black-turn';
+        document.getElementById("turn-h").innerText = "Black's turn";
+        document.getElementById("turn-h").className = "black-turn";
         data.canIEat();
         //if the player can make a eat move - add swords to the turn indicator
         if (data.canEat) {
-          console.log('cross');
-          document.getElementById('turn-h').classList.add('white-crossed-swords');
+          console.log("cross");
+          document
+            .getElementById("turn-h")
+            .classList.add("white-crossed-swords");
         }
-
       } else {
         data.currentPlayer = "white";
         //update the indicator
-        document.getElementById('turn-h').innerText = "White's turn";
-        document.getElementById('turn-h').className = 'white-turn';
+        document.getElementById("turn-h").innerText = "White's turn";
+        document.getElementById("turn-h").className = "white-turn";
         //if the player can make a eat move - add swords to the turn indicator
         data.canIEat();
         if (data.canEat) {
-          console.log('cross');
-          document.getElementById('turn-h').classList.add('black-crossed-swords');
+          console.log("cross");
+          document
+            .getElementById("turn-h")
+            .classList.add("black-crossed-swords");
         }
       }
     }

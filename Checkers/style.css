@@ -5,7 +5,7 @@ body {
 
   background-color: rgb(49, 46, 43);
   /* font-family: "Courier New", Courier, monospace; */
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   font-size: 22px;
 }
 
@@ -20,7 +20,7 @@ header {
   height: 100%;
   font-weight: 120;
   color: #c4d7d4;
-  background-color: #22201E;
+  background-color: #22201e;
 }
 
 .checkers-h {
@@ -45,7 +45,7 @@ header {
   display: none;
   position: absolute;
   align-self: center;
-  bottom: 0;
+
   flex-direction: column;
   margin: 20px auto 0 auto;
   width: 550px;
@@ -53,7 +53,7 @@ header {
   background-color: black;
   background-image: url("https://img.freepik.com/free-photo/old-wooden-texture-background-vintage_55716-1138.jpg?w=360");
   background-size: 100%;
-  outline: 80px solid #22201E;
+  outline: 80px solid #22201e;
 
   background-position: center;
 }
@@ -76,7 +76,7 @@ footer {
   padding: 4px;
   background-color: #779556;
   font-size: 22px;
-  outline: 4px #22201E solid;
+  outline: 4px #22201e solid;
 }
 
 table {
@@ -112,14 +112,14 @@ table {
 }
 
 .black-crossed-swords {
-  background-image: url('images/black-crossed-swords.svg') !important;
+  background-image: url("images/black-crossed-swords.svg") !important;
   background-size: 90px;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .white-crossed-swords {
-  background-image: url('images/white-crossed-swords.svg') !important;
+  background-image: url("images/white-crossed-swords.svg") !important;
   background-size: 90px;
   background-repeat: no-repeat;
   background-position: center;
@@ -132,7 +132,6 @@ td {
 
 .dark-cell {
   background-color: #779556;
-
 }
 .light-cell {
   background-color: #ebecd0;
