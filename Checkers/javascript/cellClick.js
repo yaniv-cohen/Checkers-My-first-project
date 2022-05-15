@@ -1,6 +1,8 @@
 //called on every cell click, goOn disables the clicks if the game is over.
 function cellClick(row, col, goOn) {
   // if the game is on
+
+  //change to return
   if (goOn) {
     //save current cell
     let cell = document.getElementById("game").rows[row].cells[col];
@@ -53,11 +55,9 @@ function cellClick(row, col, goOn) {
         //if it is a valid move
         if (cell.classList.contains("option")) {
           //copy the selected cell value and classes
-          data.board[row][col] = data.board[selected[0]][selected[1]];
+          data.board[row][col] = data.board[ selected[0] ][ selected[1] ];
           cell.className =
-            document.getElementById("game").rows[selected[0]].cells[
-              selected[1]
-            ].className;
+            document.getElementById("game").rows[ selected[0] ].cells[ selected[1] ].className;
           //empty previous position
           data.board[selected[0]][selected[1]] = 0;
           document.getElementById("game").rows[selected[0]].cells[
@@ -86,7 +86,7 @@ function cellClick(row, col, goOn) {
               //mark possible moves, without changing turns
               getAllMoves(row, col);
             }
-            //if I cant eat another -change payer turn, end the combo :(
+            //if I cant eat another -change player turn, end the combo :(
             else {
               changePlayer();
               data.combo = false;
@@ -127,16 +127,14 @@ function cellClick(row, col, goOn) {
     //functions:
 
     //defines the action after a unit eats another
-    //remove eatten piece, click on the new cell location and set start/continue a combo
+    //remove eatten piece, click on the new cell location and start/continue a combo
     function onEat() {
       //calculate the coordinate of the eatten piece
       //needed for queen jumps
       let targetRow = selected[0] > row ? row + 1 : row - 1;
       let targetCol = selected[1] > col ? col + 1 : col - 1;
       data.board[targetRow][targetCol] = 0;
-      document.getElementById("game").rows[targetRow].cells[
-        targetCol
-      ].className = "dark-cell";
+      document.getElementById("game").rows[targetRow].cells[targetCol].className = "dark-cell";
       // reset turn and click on the new cell
       //update selected to the new cell
       data.deselect();

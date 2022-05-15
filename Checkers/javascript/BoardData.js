@@ -2,6 +2,7 @@ class BoardData {
   constructor(startingPlayer) {
     //board keeps track of the units: 1 is white normal, 2 is white queen, -1 black normal, -2 black queen
     //A 4X4 would suffice, but 8X8 is simpler
+
     this.board = [
       [1, 0, 1, 0, 1, 0, 1, 0],
       [0, 1, 0, 1, 0, 1, 0, 1],
@@ -14,14 +15,14 @@ class BoardData {
       //
 
       //useful for testing:
-    //   [0, 0, 1, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, -1, 0, 2, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, 0],
-    //   [0, 0, 0, 0, 0, 0, 0, -2],
+      // [0, 0, 1, 0, 0, 0, 0, 0],
+      // [0, 0, 0, -1, 0, 2, 0, 0],
+      // [0, 0, 0, 0, 0, 0, 0, 0],
+      // [0, 0, 0, 0, 0, 0, 0, 0],
+      // [0, 0, 0, 0, 0, 0, 0, 0],
+      // [0, 0, 0, 0, 0, 0, 0, 0],
+      // [0, 0, 0, 0, 0, 0, 0, 0],
+      // [0, 0, 0, 0, 0, 0, 0, -2],
 
       // [0, 0, 0, 0, 0, 0, 2, 0],
       // [0, 1, 0, 1, 0, 0, 0, 0],
@@ -59,6 +60,7 @@ class BoardData {
       for (let k = 0; k < 8; k++) {
         //for every unit, if it my unit
         if (
+          //todo: class rather than numbers
           (data.currentPlayer === "white" && data.board[i][k] > 0) ||
           (data.currentPlayer === "black" && data.board[i][k] < 0)
         ) {
