@@ -2,7 +2,7 @@
 
 Hello and welcome to my project!<br>
 You can to run the program, run 'index.html'<br>
-##[Click Here to play](https://yaniv-cohen.github.io/Checkers-My-first-project/)
+## [Click Here to play](https://yaniv-cohen.github.io/Checkers-My-first-project/)
 
 [Video https://youtu.be/PZxVGrr1sfg](https://youtu.be/PZxVGrr1sfg)
 <br>
