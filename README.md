@@ -6,7 +6,7 @@ You can to run the program, just
 
 [Video https://youtu.be/PZxVGrr1sfg](https://youtu.be/PZxVGrr1sfg)
 <br>
-[The presentation that was in the video is in the 'images' folder](https://github.com/yanivfast1/Checkers---Yaniv-Cohen/blob/313bd18377ee9e987ba92554abebd07d9389f1bf/Checkers/images)
+[Presentation that shows how he code works](https://github.com/yanivfast1/Checkers---Yaniv-Cohen/blob/313bd18377ee9e987ba92554abebd07d9389f1bf/Checkers/images)
 
 [Find me on LinkedIn](https://www.linkedin.com/in/yaniv-cohen-8a48b4236/)<br>
 [Lemon me on Tapuz](https://www.tapuz.co.il/members/yanivyaniv22.4055136/)<br><br>
