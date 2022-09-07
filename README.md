@@ -1,4 +1,4 @@
-###Hi! this is a project I made after the first month of my Fullstack course.
+### Hi! this is a project I made after the first month of my Fullstack course.
 
 
 # Checkers---Yaniv-Cohen
