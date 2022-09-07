@@ -1,3 +1,6 @@
+###Hi! this is a project I made after the first month of my Fullstack course.
+
+
 # Checkers---Yaniv-Cohen
 
 Hello and welcome to my project!<br>
