@@ -1,7 +1,9 @@
 //called on every cell click, goOn disables the clicks if the game is over.
-function cellClick(row, col, goOn) {
+function cellClick(data, row, col, goOn) {
+  // console.log(data);
+  
   // if the game is on
-
+  let selected = data.selected;
   //change to return
   if (goOn) {
     //save current cell
@@ -21,7 +23,7 @@ function cellClick(row, col, goOn) {
         //check if any of my units can eat - used in the calculation next line
         data.canIEat();
         //mark all the optional moves for this unit
-        getAllMoves(row, col);
+        getAllMoves(data, row, col);
       }
       // (else if I clicked on an enemy or empty cell - do nothing)
     }
@@ -40,7 +42,7 @@ function cellClick(row, col, goOn) {
         //can any of my units eat?
         data.canIEat();
         //mark optional moves
-        getAllMoves(row, col);
+        getAllMoves(data, row, col);
       }
 
       //if i clicked on an empty cell
@@ -49,7 +51,7 @@ function cellClick(row, col, goOn) {
         //can any of my units eat?
         data.canIEat();
         //mark optional moves
-        getAllMoves(row, col);
+        getAllMoves(data, row, col);
         //--MIGHT BE REDUNDANT->
 
         //if it is a valid move
@@ -81,10 +83,10 @@ function cellClick(row, col, goOn) {
             onEat();
             //can i eat another?
             data.canEat = false;
-            getAllMoves(row, col, false);
+            getAllMoves(data, row, col, false);
             if (data.canEat) {
               //mark possible moves, without changing turns
-              getAllMoves(row, col);
+              getAllMoves(data, row, col);
             }
             //if I cant eat another -change player turn, end the combo :(
             else {
@@ -187,7 +189,7 @@ function cellClick(row, col, goOn) {
         for (let i = 0; i < data.board.length; i++) {
           for (let k = 0; k < data.board[i].length; k++) {
             //if the cell is black and if i have a possible move
-            if (data.board[i][k] < 0 && getAllMoves(i, k, false).length > 0) {
+            if (data.board[i][k] < 0 && getAllMoves(data, i, k, false).length > 0) {
               return true;
             }
           }
@@ -197,7 +199,7 @@ function cellClick(row, col, goOn) {
         for (let i = 0; i < data.board.length; i++) {
           for (let k = 0; k < data.board[i].length; k++) {
             //if the cell is white and if this unit has a possible move
-            if (data.board[i][k] > 0 && getAllMoves(i, k, false).length > 0) {
+            if (data.board[i][k] > 0 && getAllMoves(data, i, k, false).length > 0) {
               return true;
             }
           }

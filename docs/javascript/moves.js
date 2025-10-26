@@ -1,14 +1,22 @@
-//return all possible moves for selected unit
-//if the piece can eat, set data.canEat to 'true'
-//by default, paint the possible moves unless paint is false
-function getAllMoves(row, col, paintPossibleMoves = true) {
-  let legalMoves = []; //stores possible moves
-  let direction; //does this piece go up or down
-  if (data.currentPlayer == "white") {
+function getDirection(currentPlayer) {
+  if (currentPlayer == "white") {
     direction = 1;
   } else {
     direction = -1;
   }
+  return direction;
+}
+
+
+//return all possible moves for selected unit
+//if the piece can eat, set data.canEat to 'true'
+//by default, paint the possible moves unless paint is false
+function getAllMoves(data, row, col, paintPossibleMoves = true) {
+  let legalMoves = []; //stores possible moves
+  let direction = getDirection(data.currentPlayer); //does this piece go up or down
+
+  console.log(data);
+  
   //if the unit is a normal piece
   if (Math.abs(data.board[row][col]) == 1) {
     //can I eat forward? if yes store answer as data.canEat

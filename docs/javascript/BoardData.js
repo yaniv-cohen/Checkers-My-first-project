@@ -2,7 +2,7 @@ class BoardData {
   constructor(startingPlayer) {
     //board keeps track of the units: 1 is white normal, 2 is white queen, -1 black normal, -2 black queen
     //A 4X4 would suffice, but 8X8 is simpler
-
+    this.selected = [];
     this.board = [
       [1, 0, 1, 0, 1, 0, 1, 0],
       [0, 1, 0, 1, 0, 1, 0, 1],
@@ -12,7 +12,6 @@ class BoardData {
       [0, -1, 0, -1, 0, -1, 0, -1],
       [-1, 0, -1, 0, -1, 0, -1, 0],
       [0, -1, 0, -1, 0, -1, 0, -1],
-      //
 
       //useful for testing:
       // [0, 0, 1, 0, 0, 0, 0, 0],
@@ -46,13 +45,15 @@ class BoardData {
     this.combo = false; //did I just eat a unit? used to know if a normal piece can eat backwards
     this.canEat = false; //hold true or false, used to know if one of the units of current player can eat
     this.endGame = false; //disables clicks on the board if the game is over
+    this.cellClick =  cellClick;
+
   }
 
-  //goes over all of the current player's units and return true if any of them can eat
+  //goes over all of the current player's units and returns true if any of them can eat
   //used to know wheter to allow a unit to make a move without eating an enemy
   canIEat() {
     //reset from last turn
-    data.canEat = false;
+    this.canEat = false;
     while (document.getElementsByClassName("eater").length > 0) {
       document.getElementsByClassName("eater")[0].classList.remove("eater");
     }
@@ -61,14 +62,14 @@ class BoardData {
         //for every unit, if it my unit
         if (
           //todo: class rather than numbers
-          (data.currentPlayer === "white" && data.board[i][k] > 0) ||
-          (data.currentPlayer === "black" && data.board[i][k] < 0)
+          (this.currentPlayer === "white" && this.board[i][k] > 0) ||
+          (this.currentPlayer === "black" && this.board[i][k] < 0)
         ) {
           //calculate all its legalMoves, that changes data.canEat to 'true' if there is a possible eat move
           //if this unit can eat-jump an enemy unit color it.  the test is done without marking the options
-          getAllMoves(i, k, false);
-          if (data.canEat && getAllMoves(i, k, false).length > 0) {
-            console.log(data.combo);
+          getAllMoves(this, i, k, false);
+          if (this.canEat && getAllMoves(this, i, k, false).length > 0) {
+            console.log(this.combo);
             document
               .getElementsByTagName("table")[0]
               .rows[i].cells[k].classList.add("eater");
@@ -105,11 +106,11 @@ class BoardData {
   //adds select class and stores the last selected cell coordinate.
   select(row, col, cell) {
     cell.classList.add("selected");
-    selected = [row, col];
+    this.selected = [row, col];
   }
   //remove the class 'selected' from everything and empty the array selected from last cell it held
   deselect() {
-    selected = [];
+    this.selected = [];
     if (document.getElementsByClassName("selected").length > 0) {
       document
         .getElementsByClassName("selected")[0]

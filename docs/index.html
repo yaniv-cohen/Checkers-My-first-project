@@ -1,73 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Checkers by Yaniv</title>
     <link rel="stylesheet" href="style.css" />
-  </head>
+</head>
 
-  <body>
-    <header>
-      <h1 class="checkers-h">Checkers</h1>
-      <p>Pieces can move 1 step diagonally to an empty cell.</p>
-      <p>Pieces can jump diagonally over an enemy if the next cell is empty.</p>
-      <p>
-        After jumping over an enemy piece, the enemy piece is removed<br />and
-        the piece can hop over another enemy piece.
-      </p>
-      <br />
-      <a class="myButton" onclick="initializeGame()">Click Here To Play</a>
-      <div id="form-div">
-        <h2><u>Optional Rules:</u></h2>
-        <p>
-          <input type="checkbox" id="comboCantGoBack" name="comboCantGoBack" />
-          <label for="comboCantGoBack">
-            Normal pieces can't go back, not even in multi-jumps</label
-          >
-        </p>
-        <p>
-          <input
-            type="checkbox"
-            id="queenOnlyOneMove"
-            name="queenOnlyOneMove"
-          />
-          <label for="queenOnlyOneMove"
-            >Queen can move only one cell in each direction</label
-          >
-        </p>
-        <br />
-      </div>
+<body>
+    <header role="banner">
+        <h1 class="checkers-h">Checkers</h1>
+        
+        <section id="rules" aria-label="Game Rules">
+            <h2>Game Rules:</h2>
+            <ul>
+                <li>Pieces move one step diagonally to an empty cell.</li>
+                <li>Pieces must jump diagonally over an enemy if the next cell is empty.</li>
+                <li>After a capture, the piece can continue jumping over subsequent enemies (multi-jump).</li>
+            </ul>
+        </section>
+
+        <section id="game-controls">
+            <button id="startGameButton" class="myButton">Click Here To Play</button>
+
+            <div id="form-div">
+                <h2>Optional Rules:</h2>
+                <fieldset role="group" aria-labelledby="optional-rules-heading">
+                    <legend id="optional-rules-heading">Customize Game Rules</legend>
+                    
+                    <p>
+                        <input type="checkbox" id="comboCantGoBack" name="comboCantGoBack" />
+                        <label for="comboCantGoBack">Normal pieces can't go back, not even in multi-jumps</label>
+                    </p>
+                    
+                    <p>
+                        <input type="checkbox" id="queenOnlyOneMove" name="queenOnlyOneMove" />
+                        <label for="queenOnlyOneMove">Queen can move only one cell in each direction</label>
+                    </p>
+                </fieldset>
+            </div>
+        </section>
     </header>
-    <div id="gameBoard"></div>
-    <div class="win-div" id="white-win-div">
-      <h1>White Won !</h1>
-      <p id="white-win-condition-text"></p>
-      <div>
-        <h2><u>Play again ?</u></h2>
 
-        <a class="myButton" onclick="initializeGame()">Click Here To Play</a>
-      </div>
-    </div>
-    <div class="win-div" id="black-win-div">
-      <h1>Black Won !</h1>
-      <p id="black-win-condition-text"></p>
-      <div>
-        <h2><u>Play again ?</u></h2>
+    <main id="gameContainer" role="main">
+        <div id="gameBoard" role="presentation"></div>
 
- 
-        <a class="myButton" onclick="initializeGame()">Click Here To Play</a>
-      </div>
-    </div>
-    <a href="https://github.com/yanivfast1/Checkers---Yaniv-Cohen"
-      ><footer>Yaniv's Checkers Game for Cyber4</footer></a
-    >
+        <section class="win-div" id="white-win-div" role="alert" aria-live="assertive" style="display: none;">
+            <h1>White Won! 🏆</h1>
+            <p id="white-win-condition-text"></p>
+            <div role="group" aria-label="Play Again Options">
+                <h2>Play again?</h2>
+                <button class="myButton restart-button">Click Here To Play</button>
+            </div>
+        </section>
+
+        <section class="win-div" id="black-win-div" role="alert" aria-live="assertive" style="display: none;">
+            <h1>Black Won! 🏆</h1>
+            <p id="black-win-condition-text"></p>
+            <div role="group" aria-label="Play Again Options">
+                <h2>Play again?</h2>
+                <button class="myButton restart-button">Click Here To Play</button>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <a href="https://github.com/yanivfast1/Checkers---Yaniv-Cohen" target="_blank" rel="noopener noreferrer">
+            Yaniv's Checkers Game for Cyber4
+        </a>
+    </footer>
+
     <script src="javascript/winner.js"></script>
     <script src="javascript/BoardData.js"></script>
     <script src="javascript/moves.js"></script>
     <script src="javascript/paintBoard.js"></script>
     <script src="javascript/cellClick.js"></script>
     <script src="javascript/initializeGame.js"></script>
-  </body>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Find the start button and attach the event listener
+            document.getElementById('startGameButton').addEventListener('click', initializeGame);
+
+            // Find all restart buttons (in the win screens) and attach the listener
+            document.querySelectorAll('.restart-button').forEach(button => {
+                button.addEventListener('click', initializeGame);
+            });
+        });
+    </script>
+</body>
 </html>
