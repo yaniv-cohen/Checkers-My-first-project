@@ -1,7 +1,7 @@
 //return all possible moves for selected unit
 //if the piece can eat, set data.canEat to 'true'
 //by default, paint the possible moves unless paint is false
-function getAllMoves(row, col, paint = true) {
+function getAllMoves(row, col, paintPossibleMoves = true) {
   let legalMoves = []; //stores possible moves
   let direction; //does this piece go up or down
   if (data.currentPlayer == "white") {
@@ -92,7 +92,7 @@ function getAllMoves(row, col, paint = true) {
     }
   }
   //mark the cells for the player to see
-  if (paint) {
+  if (paintPossibleMoves) {
     addAvailableOption();
   }
   //returns an array of possible moves. for example [[0,0],[0,3],[2,2]]

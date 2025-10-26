@@ -186,19 +186,17 @@ function cellClick(row, col, goOn) {
         //loop throught all cells
         for (let i = 0; i < data.board.length; i++) {
           for (let k = 0; k < data.board[i].length; k++) {
-            //if the cell is black
-            //if i have a possible move
+            //if the cell is black and if i have a possible move
             if (data.board[i][k] < 0 && getAllMoves(i, k, false).length > 0) {
               return true;
             }
           }
         }
       } else if (player == "white") {
-        //loop throught all cells
+        //loop through all cells
         for (let i = 0; i < data.board.length; i++) {
           for (let k = 0; k < data.board[i].length; k++) {
-            //if the cell is white
-            //if this unit has a possible move
+            //if the cell is white and if this unit has a possible move
             if (data.board[i][k] > 0 && getAllMoves(i, k, false).length > 0) {
               return true;
             }
