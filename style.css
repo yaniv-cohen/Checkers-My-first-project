@@ -1,7 +1,10 @@
 body {
   display: flex;
   flex-direction: column;
-  margin: auto;
+  margin: 0;
+  min-height: 100vh;
+  align-items: center; /* center children horizontally */
+  box-sizing: border-box; /* include padding/borders in measurements */
 
   background-color: rgb(49, 46, 43);
   /* font-family: "Courier New", Courier, monospace; */
@@ -18,7 +21,8 @@ header {
   margin: 0px auto;
   padding: 20px 20px 0 20px;
   height: 100%;
-  font-weight: 120;
+  /* 120 is not a standard font-weight; use a valid value */
+  font-weight: 200;
   color: #c4d7d4;
   background-color: #22201e;
 }
@@ -43,16 +47,18 @@ header {
 
 #gameBoard {
   display: none;
-  position: absolute;
+  /* avoid absolute positioning so the board can be centered by flexbox */
+  position: relative;
   align-self: center;
 
+  display: flex;
   flex-direction: column;
-  margin: 20px auto 0 auto;
+  margin: 20px 0 0 0;
   width: 550px;
   padding: 0 40px;
   background-color: black;
   background-image: url("https://img.freepik.com/free-photo/old-wooden-texture-background-vintage_55716-1138.jpg?w=360");
-  background-size: 100%;
+  background-size: cover;
   outline: 80px solid #22201e;
 
   background-position: center;
@@ -180,10 +186,8 @@ td {
 
 .fade-in-animation {
   animation: fadeIn 1s;
-  -webkit-animation: fadeIn 1s;
-  -moz-animation: fadeIn 1s;
-  -o-animation: fadeIn 1s;
-  -ms-animation: fadeIn 1s;
+  -webkit-animation: fadeIn 1s; /* Safari/older WebKit */
+  -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
 
